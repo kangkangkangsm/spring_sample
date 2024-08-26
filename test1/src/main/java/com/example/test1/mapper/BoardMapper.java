@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.test1.model.Board;
 import com.example.test1.model.Emp;
 
-
 @Mapper
 public interface BoardMapper {
 	
@@ -17,4 +16,9 @@ public interface BoardMapper {
 	
 	//게시판 삭제 
 	void deleteBoard(HashMap<String, Object> map);
+	
+	void insertBoard(HashMap<String, Object> map);
+	
+	List<Board> searchBoardList(HashMap<String, Object> map);
+	
 }

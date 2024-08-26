@@ -12,5 +12,7 @@ public interface BoardService {
 	
 	HashMap<String, Object> removeBoard(HashMap<String, Object> map);
 	
+	HashMap<String, Object> addBoard(HashMap<String, Object> map);
 	
+	List<Board> boardSearch(HashMap<String, Object> map);
 }

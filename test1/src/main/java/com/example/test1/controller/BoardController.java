@@ -28,6 +28,13 @@ public class BoardController {
         return "/board/board-list";
     }
 	
+	@RequestMapping("/board/insert.do") 
+    public String main2(Model model) throws Exception{
+
+        return "/board/board-insert";
+    }
+	
+	
 	
 	//게시글 목록 페이지
 	@RequestMapping(value = "/board/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -49,4 +56,22 @@ public class BoardController {
 	return new Gson().toJson(resultMap);
 }
 	
+	//게시글 삽입 
+		@RequestMapping(value = "/board/add.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String insertBoard(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap = BoardService.addBoard(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+		@RequestMapping(value = "/board/search.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String searchBoardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			List<Board> list = BoardService.boardSearch(map);
+			resultMap.put("list", list);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
 }

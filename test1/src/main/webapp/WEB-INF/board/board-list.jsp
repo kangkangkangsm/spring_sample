@@ -40,6 +40,12 @@
 </style>
 <body>
 	<div id="app">
+			<div>
+				검색 : <input type="text" placeholder="제목" v-model="search">
+				<button @click="fnSearch()" > 검색 </button>
+				
+			</div>
+			
 		<table>
 			<tr> 
 				<th>번호</th>
@@ -49,7 +55,7 @@
 				<th>작성일</th>
 				<th>삭제</th>
 			</tr>
-			<tr v-for = "item in boardList">
+			<tr v-for = "item in searchList">
 				<td>{{item.boardNo}}</td>
 				<td>{{item.TITLE}}</td>
 				<td>{{item.USERID}}</td>
@@ -57,7 +63,9 @@
 				<td>{{item.CDATETIME}}</td>
 				<td><button @click="fnRemove(item.boardNo)">삭제</button> </td>
 			</tr>
+					
 		</table> 
+		
 	</div>
 </body>
 </html>
@@ -68,7 +76,9 @@
         data() {
             return {
                 name : "홍길동",
-				boardList : []
+				boardList : [],
+				search : "",
+				searchList : []
             };
         },
         methods: {
@@ -96,16 +106,29 @@
 								data : nparmap,
 								success : function(data) { 
 								alert(data.message);
-								self.fnGetList();
+								self.fnSearch();
 								}
 							});
 			            },
+			fnSearch(){
+								var self = this;
+								var nparmap = {search : self.search};
+								$.ajax({
+								url:"/board/search.dox",
+								dataType:"json",	
+								type : "POST", 
+								data : nparmap,
+								success : function(data) { 
+								self.searchList = data.list;
+							
+														}
+													});
+									            },
+						
         },
-	 
-		
         mounted() {
             var self = this;
-			self.fnGetList();
+			self.fnSearch();
         }
     });
     app.mount('#app');
