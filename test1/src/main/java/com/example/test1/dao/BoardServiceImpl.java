@@ -20,5 +20,18 @@ public class BoardServiceImpl implements BoardService {
 		return BoardMapper.selectBoardList(map);
 	}
 
+	@Override
+	public HashMap<String, Object> removeBoard(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<>();
+		try {
+			BoardMapper.deleteBoard(map);
+			resultMap.put("message", "삭제되었습니다.");
+		} catch (Exception e) {
+			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");
+		}
+		return resultMap;
+	}
+
 
 }

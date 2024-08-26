@@ -47,21 +47,23 @@
 				<th>작성자</th>
 				<th>조회수</th>
 				<th>작성일</th>
-				
+				<th>삭제</th>
 			</tr>
 			<tr v-for = "item in boardList">
-				<td>{{item.BOARDNO}}</td>
+				<td>{{item.boardNo}}</td>
 				<td>{{item.TITLE}}</td>
 				<td>{{item.USERID}}</td>
 				<td>{{item.HIT}}</td>
 				<td>{{item.CDATETIME}}</td>
-			
+				<td><button @click="fnRemove(item.boardNo)">삭제</button> </td>
 			</tr>
-		</table>
+		</table> 
 	</div>
 </body>
 </html>
 <script>
+	
+	   
     const app = Vue.createApp({
         data() {
             return {
@@ -84,7 +86,23 @@
 					}
 				});
             },
+			fnRemove(num){
+							var self = this;
+							var nparmap = {boardNo : num};
+							$.ajax({
+								url:"/board/remove.dox",
+								dataType:"json",	
+								type : "POST", 
+								data : nparmap,
+								success : function(data) { 
+								alert(data.message);
+								self.fnGetList();
+								}
+							});
+			            },
         },
+	 
+		
         mounted() {
             var self = this;
 			self.fnGetList();

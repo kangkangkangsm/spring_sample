@@ -12,5 +12,9 @@ import com.example.test1.model.Emp;
 @Mapper
 public interface BoardMapper {
 	
+	//게시판 목록
 	List<Board> selectBoardList(HashMap<String, Object> map);
+	
+	//게시판 삭제 
+	void deleteBoard(HashMap<String, Object> map);
 }

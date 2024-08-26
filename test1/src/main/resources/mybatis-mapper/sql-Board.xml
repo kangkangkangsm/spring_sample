@@ -9,6 +9,14 @@
 		FROM TBL_BOARD
 	</select>	
 	
+	 <!-- 게시판 삭제 -->
+    <delete id="deleteBoard" parameterType="hashmap">
+    
+        delete 
+        from TBL_BOARD 
+        where BOARDNO = ${boardNo}
+    
+    </delete>
 
 	
 </mapper>

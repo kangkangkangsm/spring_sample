@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.test1.dao.BoardService;
 import com.example.test1.model.Board;
@@ -38,4 +39,14 @@ public class BoardController {
 	resultMap.put("result", "success");
 	return new Gson().toJson(resultMap);
 }
+	//게시글 삭제 
+	@RequestMapping(value = "/board/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String board_remove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = BoardService.removeBoard(map);
+	resultMap.put("result", "success");
+	return new Gson().toJson(resultMap);
+}
+	
 }

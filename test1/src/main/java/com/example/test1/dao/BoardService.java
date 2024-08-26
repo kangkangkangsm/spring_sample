@@ -10,6 +10,7 @@ public interface BoardService {
 
 	List<Board> BoardList1(HashMap<String, Object> map);
 	
+	HashMap<String, Object> removeBoard(HashMap<String, Object> map);
 	
 	
 }
