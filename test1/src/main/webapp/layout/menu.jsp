@@ -4,9 +4,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<script src="js/jquery.js"></script>
+	<script src="/js/jquery.js"></script>
 	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-	<link rel="stylesheet" href="css/menu.css">
+	<link rel="stylesheet" href="/css/menu.css">
 	<title>Insert title here</title>
 </head>
 <style>

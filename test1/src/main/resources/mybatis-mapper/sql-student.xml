@@ -50,4 +50,13 @@
 	
 	</select>	
 	
+	
+	<select id="subject" parameterType="hashmap" resultType="com.example.test1.model.Student">
+									<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
+		SELECT * FROM SUBJECT
+		ORDER BY SUB_NO
+	
+	</select>	
+	
+	
 </mapper>

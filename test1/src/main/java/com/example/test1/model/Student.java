@@ -12,5 +12,12 @@ public class Student {
 	private String stuGender;
 	private String stuHeight;
 	private String stuWeight;
+	
+	// Subject 테이블 
+	private String SUBNO;
+	private String SUBNAME;
+	private String SUBPROF;
+	private String SUBGRADE;
+	private String SUBDEPT;
 
 }

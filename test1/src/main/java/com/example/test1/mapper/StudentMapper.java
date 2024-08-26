@@ -7,18 +7,21 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
+import com.example.test1.model.Subject;
 
 @Mapper
 public interface StudentMapper {
 	List<Emp> emp(HashMap<String, Object> map);
 	
-	List<Student> selectStudentList(HashMap<String, Object> map);
+	List<Student> selectStudentList();
 	
 	Student qwer();
 
 	
 	List<Student> abcd(HashMap<String, Object> map);
 	List<Student> same(HashMap<String, Object> map);
+	
+	List<Student> subject();
 	
 	
 	

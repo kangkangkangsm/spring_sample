@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
+import com.example.test1.model.Subject;
 
 public interface StudentService {
 	
@@ -16,8 +17,7 @@ public interface StudentService {
 	//		= 매퍼 - db 왔다가따
 	//		= 예외처리까지함  
 	// 게시글 조회
-	List<Student> searchStudentList(HashMap<String, Object> map);
-	
+
 	
 	List<Student> sameStudentList(HashMap<String, Object> map);
 	
@@ -25,4 +25,7 @@ public interface StudentService {
 	
 	List<Emp> empList(HashMap<String, Object> map);
 	
+	
+	
+	HashMap<String, Object> searchSubject();
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.test1.dao.StudentService;
 import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
+import com.example.test1.model.Subject;
 import com.google.gson.Gson;
 
 @Controller
@@ -46,16 +47,13 @@ public class StudentController {
         return "/emp-list";  
     }
 	
-	@RequestMapping(value = "/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String searchBbsList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Student> list = studentService.searchStudentList(map);
-		resultMap.put("list", list);
-		resultMap.put("result", "success");
-		return new Gson().toJson(resultMap);
-	}
+	@RequestMapping("/subject.do") 
+    public String main4(Model model) throws Exception{
+		
+        return "/subject-list";  
+    }
 	
+
 	@RequestMapping(value = "/ok.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String qwer(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -101,7 +99,25 @@ public class StudentController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
-	
+		
+
+		@RequestMapping(value = "/sub-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String subject() throws Exception {
+		    // studentService의 searchSubject() 메소드를 호출하여 데이터 가져오기
+		    HashMap<String, Object> resultMap = studentService.searchSubject();
+		    
+		    List<Student> subList = (List<Student>) resultMap.get("subList");
+		    List<Student> stuList = (List<Student>) resultMap.get("stuList");
+
+		    HashMap<String, Object> responseMap = new HashMap<>();
+		    responseMap.put("subList", subList);
+		    responseMap.put("stuList", stuList);
+		    responseMap.put("result", "success");
+
+			    return new Gson().toJson(responseMap);
+		}
+		
 }
 
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.test1.mapper.StudentMapper;
 import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
+import com.example.test1.model.Subject;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -23,11 +24,7 @@ public class StudentServiceImpl implements StudentService{
 	// 메소드 하나당 객체 하나만 만들어도됌 
 	StudentMapper studentMapper;
 	
-	@Override
-	public List<Student> searchStudentList(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return studentMapper.selectStudentList(map);
-	}
+	
 
 	@Override
 	public Student searchQwer() {
@@ -52,6 +49,19 @@ public class StudentServiceImpl implements StudentService{
 	public List<Emp> empList(HashMap<String, Object> map) {
 		return studentMapper.emp(map);
 
+	}
+
+
+	@Override
+	public HashMap<String, Object> searchSubject() {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		List<Student> subject = studentMapper.subject();
+		List<Student> student = studentMapper.selectStudentList();
+		
+		resultMap.put("subList", subject);
+		resultMap.put("stuList", student);
+		
+		return resultMap;
 	}
 
 	

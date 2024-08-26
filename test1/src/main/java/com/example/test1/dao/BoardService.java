@@ -1,0 +1,15 @@
+package com.example.test1.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.example.test1.model.Board;
+import com.example.test1.model.Emp;
+
+public interface BoardService {
+
+	List<Board> BoardList1(HashMap<String, Object> map);
+	
+	
+	
+}
