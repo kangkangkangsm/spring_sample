@@ -41,6 +41,11 @@
 <body>
 	<div id="app">
 			<div>
+				<select v-model="boardType">
+					<option value="">::전체::</option>
+					<option value="TITLE">제목</option>
+					<option value="userName">작성자</option>
+				</select>
 				검색 : <input type="text" placeholder="제목" v-model="search" @keyup.enter="fnSearch()">
 				<button @click="fnSearch()" > 검색 </button>
 				<button @click="fnReset()" > 초기화 </button>
@@ -81,7 +86,8 @@
                 name : "홍길동",
 				boardList : [],
 				search : "",
-				searchList : []
+				searchList : [],
+				boardType:""
             };
         },
         methods: {

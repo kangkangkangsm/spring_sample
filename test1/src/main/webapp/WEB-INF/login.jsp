@@ -78,7 +78,8 @@
 						if(data.login == undefined){
 							alert("로그인 실패!");
 						}else{
-							alert("로그인 성공!");
+							alert("로그인 성공! 게시판으로 이동할게요! ");
+							location.href ="/board/list.do"
 						}
 					
 											}

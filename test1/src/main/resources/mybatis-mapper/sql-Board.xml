@@ -33,6 +33,8 @@
 		FROM TBL_BOARD T 
 		INNER JOIN TBL_USER U ON T.userId = U.userID
 		WHERE TITLE LIKE '%' || #{search} || '%' 
+		
+		
 
 	</select>	
 	
