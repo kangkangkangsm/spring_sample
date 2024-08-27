@@ -16,6 +16,6 @@ public class Board {
 	private String NOTICEYN;
 	private String CDATETIME;
 	private String UDATETIME;
-
+	private String userName;
 	
 }

@@ -71,9 +71,15 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-					alert(data.message);
-				
-					
+						if(self.userId == "" || self.pwd == ""){
+							alert("아이디 or 비번 입력");
+							return;
+						}
+						if(data.login == undefined){
+							alert("로그인 실패!");
+						}else{
+							alert("로그인 성공!");
+						}
 					
 											}
 										});

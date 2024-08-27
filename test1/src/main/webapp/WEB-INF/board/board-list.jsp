@@ -55,14 +55,16 @@
 				<th>조회수</th>
 				<th>작성일</th>
 				<th>삭제</th>
+				<th>수정</th>
 			</tr>
 			<tr v-for = "item in searchList">
 				<td>{{item.boardNo}}</td>
 				<td><a href="#" @click="fnView(item.boardNo)">{{item.TITLE}}</a></td>
-				<td><a href="#" @click="fnUserView(item.USERID)">{{item.USERID}}</a></td>
+				<td><a href="#" @click="fnUserView(item.USERID)">{{item.userName}}</a></td>
 				<td>{{item.HIT}}</td>
 				<td>{{item.CDATETIME}}</td>
 				<td><button @click="fnRemove(item.boardNo)">삭제</button> </td>
+				<td><button @click="fnUpdate(item.boardNo)">수정</button> </td>
 			</tr>
 		</table> 
 			<button @click="fnAdd()" > 글쓰기</button>			

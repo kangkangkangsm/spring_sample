@@ -12,4 +12,19 @@
 	</insert>
 
  
+ 	<select id="login" parameterType="hashmap" resultType="com.example.test1.model.User">		
+								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
+		SELECT * 
+		FROM TBL_USER
+		WHERE userId = #{userId} AND pwd = #{pwd}
+
+	</select>
+	
+	<select id="viewUser" parameterType="hashmap" resultType="com.example.test1.model.User">		
+								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
+		SELECT * 
+		FROM TBL_USER
+		WHERE USERID = #{userId} 
+
+	</select>
 </mapper>

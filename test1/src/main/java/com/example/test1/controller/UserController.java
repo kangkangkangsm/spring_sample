@@ -24,16 +24,23 @@ public class UserController {
 	@Autowired
 	UserService UserService;
 	
+	//회원가입
+	@RequestMapping("/join.do") 
+	public String join(Model model) throws Exception{
+		
+		return "/join";
+	}
+	//로그인
 	@RequestMapping("/login.do") 
     public String login(Model model) throws Exception{
 
         return "/login";
     }
-	
-	@RequestMapping("/join.do") 
-    public String join(Model model) throws Exception{
-
-        return "/join";
+	// 유저정보 상세보기 
+	@RequestMapping("/board/userView.do") 
+    public String main4(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("userId", map.get("userId"));
+        return "/board/user-view";
     }
 
 	
@@ -55,6 +62,25 @@ public class UserController {
 		
 		return new Gson().toJson(resultMap);
 		}
+   //유저 정보	
+		@RequestMapping(value = "/board/userView.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String boardUserView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap = UserService.userSearch(map);
+			System.out.println(resultMap);	
+		return new Gson().toJson(resultMap);
+	}
+		
+   //아이디 중복체크
+		@RequestMapping(value = "/user.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String idCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap = UserService.idCheck(map);
+			System.out.println(resultMap);	
+		return new Gson().toJson(resultMap);
+	}
 	
 	
 }

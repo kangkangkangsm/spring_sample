@@ -23,14 +23,15 @@
  	<insert id="insertBoard" parameterType="hashmap">
  	
     INSERT INTO TBL_BOARD (BOARDNO, TITLE, CONTENTS, HIT, USERID, CDATETIME, UDATETIME)
-    VALUES (board_seq.NEXTVAL, #{TITLE}, #{CONTENTS}, 0, '나야나', SYSDATE, SYSDATE)
+    VALUES (board_seq.NEXTVAL, #{TITLE}, #{CONTENTS}, 0, 'admin', SYSDATE, SYSDATE)
 	
 	</insert>
 
 	<select id="searchBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">		
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
 		SELECT * 
-		FROM TBL_BOARD 
+		FROM TBL_BOARD T 
+		INNER JOIN TBL_USER U ON T.userId = U.userID
 		WHERE TITLE LIKE '%' || #{search} || '%' 
 
 	</select>	
@@ -43,12 +44,6 @@
 
 	</select>	
 	
-	<select id="viewUser" parameterType="hashmap" resultType="com.example.test1.model.User">		
-								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
-		SELECT * 
-		FROM TBL_USER
-		WHERE USERID = #{userId} 
-
-	</select>	
+	
 	
 </mapper>

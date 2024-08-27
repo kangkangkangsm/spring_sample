@@ -15,8 +15,8 @@ public interface UserMapper {
 	//게시판 목록
 	
 	void join(HashMap<String, Object> map);
-	void login(HashMap<String, Object> map);
-	
+	User login(HashMap<String, Object> map);
+	User viewUser(HashMap<String, Object> map);
 	
 	
 	//게시판 삭제 

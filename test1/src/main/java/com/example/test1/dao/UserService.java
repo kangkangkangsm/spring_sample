@@ -12,5 +12,6 @@ public interface UserService {
 	HashMap<String, Object> userJoin(HashMap<String, Object> map);
 	
 	HashMap<String, Object> userLogin(HashMap<String, Object> map);
-
+	HashMap<String, Object> userSearch(HashMap<String, Object> map);
+	HashMap<String, Object> idCheck(HashMap<String, Object> map);
 	}

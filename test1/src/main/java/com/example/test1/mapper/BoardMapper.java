@@ -21,6 +21,6 @@ public interface BoardMapper {
 	List<Board> searchBoardList(HashMap<String, Object> map);
 	
 	Board viewBoard(HashMap<String, Object> map);
-	User viewUser(HashMap<String, Object> map);
+	
 	
 }

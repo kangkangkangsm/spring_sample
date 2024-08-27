@@ -37,15 +37,42 @@ public class UserServiceImpl implements UserService {
 		HashMap<String, Object> resultMap = new HashMap<>();
 		System.out.println(map);		
 		try {
-			UserMapper.login(map);
-			resultMap.put("message", "로그인 완료");
+			User User = UserMapper.login(map);	
+			resultMap.put("login", User);
 		} catch (Exception e) {
-			resultMap.put("message", "아이디,비밀번호 확인");
+			resultMap.put("message", "fail");
 		}
 		return resultMap;
 	}
 
-
-
+	@Override
+	public HashMap<String, Object> userSearch(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		try {
+			User User = UserMapper.viewUser(map);
+			resultMap.put("info", User);
+			resultMap.put("result", "success");
+			resultMap.put("message", "검색되었습니다.");
+			System.out.println(resultMap);
+		} catch (Exception e) {
+			resultMap.put("result", "fail");
+			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");
+		}
+		return resultMap;
+	}
+	
+	@Override
+	public HashMap<String, Object> idCheck(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		try {
+			User User = UserMapper.viewUser(map);
+			resultMap.put("idCheck", User);
+			resultMap.put("message", "이미 있는아이디.");
+			System.out.println(resultMap);
+		} catch (Exception e) {
+	
+		}
+		return resultMap;
+	}
 
 }

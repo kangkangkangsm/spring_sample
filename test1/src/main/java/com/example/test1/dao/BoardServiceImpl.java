@@ -71,21 +71,7 @@ public class BoardServiceImpl implements BoardService {
 		return resultMap;
 	}
 
-	@Override
-	public HashMap<String, Object> userSearch(HashMap<String, Object> map) {
-		HashMap<String, Object> resultMap = new HashMap<>();
-		try {
-			User User = boardMapper.viewUser(map);
-			resultMap.put("info", User);
-			resultMap.put("result", "success");
-			resultMap.put("message", "검색되었습니다.");
-			System.out.println(resultMap);
-		} catch (Exception e) {
-			resultMap.put("result", "fail");
-			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");
-		}
-		return resultMap;
-	}
+	
 
 
 }

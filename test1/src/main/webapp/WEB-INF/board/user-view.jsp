@@ -51,11 +51,9 @@
 			<div>성별 : {{viewList.gender}}</div>
 			</template>
 		<template v-else>
-				<div>유저 정보가 없습니다.</div>
-			</template>	
-			
-			
-		<button @click="fnBack()">돌아가기</button>
+			<div>유저 정보 없음!</div>
+		</template>				
+		<button @click="fnBack1()">돌아가기</button>
 	</div>
 </body>
 </html>
@@ -71,7 +69,7 @@
             };
         },
         methods: {
-			fnBack() {
+			fnBack1() {
 				location.href ="/board/list.do"
 			},
 			fnUserView(){

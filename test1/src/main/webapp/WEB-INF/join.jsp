@@ -7,7 +7,7 @@
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 	<title>첫번째 페이지</title>	
 	<style>
-		table{
+		
 			th {
 			  
 			    color: black; /* 텍스트 색상 */
@@ -33,33 +33,40 @@
 			th, td {
 			    text-align: center;
 			}
-		}
+			
+			a {		
+				display: inline-block; /* allows width to be applied */
+				width: 90px;
+				}
+		
 		</style>
 </head>
 
 <body>
 	<div id="app">
 		<div>
-			아이디 : <input type="text" placeholder="아이디" v-model="userId" >
+			<a>아이디  </a><input type="text" placeholder="아이디" v-model="userId" >
+			<button @click="fnCheck()">중복체크</button>
 		</div>
 		<div>
-			비밀번호 : <input type="password" placeholder="비밀번호" v-model="pwd" >
+			<a>비밀번호  </a><input type="password" placeholder="비밀번호" v-model="pwd" >
 		</div>
 		<div>
-			이름 : <input type="text" placeholder="이름" v-model="userName" >
+			<a>이름  </a><input type="text" placeholder="이름" v-model="userName" >
 		</div>
 		<div>
-			이메일 : <input type="email" placeholder="이메일" v-model="email" >
+			<a>이메일  </a><input type="email" placeholder="이메일" v-model="email" >
 		</div>
 		<div>
-			핸드폰번호 : <input type="text" placeholder="핸드폰번호" v-model="phone" >
+			<a>핸드폰번호  </a><input type="text" placeholder="핸드폰번호" v-model="phone" >
 		</div>
 		<div>
-			성별 : 남 <input type="radio" name="gender" v-model="gender" value="M" >
+			<a>성별  </a>남 <input type="radio" name="gender" v-model="gender" value="M" >
 				 여 <input type="radio" name="gender" v-model="gender" value="F" >
 			
 		</div>	
 		<button @click="fnSave()"> 가입하기 </button>
+		
 		
 	</div>
 </body>
@@ -75,7 +82,8 @@
 				userName : "",
 				email : "",
 				phone : "",
-				gender : ""
+				gender : "",
+				idCheck : {}
             };
         },
         methods: {
@@ -97,6 +105,27 @@
 					}
 				});
             },
+			fnCheck(){
+					var self = this;
+					var nparmap = {userId : self.userId};
+					$.ajax({
+						url:"/user.dox",
+						dataType:"json",	
+						type : "POST", 
+						data : nparmap,
+						success : function(data) { 
+							if(self.userId == ""){
+								alert("아이디 입력하세요");
+								return;
+							}
+							if(data.idCheck == undefined){
+								alert("회원가입 가능!");
+							}else{
+								alert("중복된아이디!");
+							}
+						}
+					});
+	            },
 			
         },	
         mounted() {

@@ -44,12 +44,7 @@ public class BoardController {
 		request.setAttribute("boardNo", map.get("boardNo"));
         return "/board/board-view";
     }
-	// 유저정보 상세보기 
-	@RequestMapping("/board/userView.do") 
-    public String main4(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		request.setAttribute("userId", map.get("userId"));
-        return "/board/user-view";
-    }
+
 	
 	
 	//게시글 목록 페이지
@@ -91,6 +86,7 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 		
+		//게시글 상세
 		@RequestMapping(value = "/board/view.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 		@ResponseBody
 		public String boardView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -98,12 +94,5 @@ public class BoardController {
 			resultMap = BoardService.viewSearch(map);
 		return new Gson().toJson(resultMap);
 	}
-		@RequestMapping(value = "/board/userView.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		@ResponseBody
-		public String boardUserView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-			HashMap<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap = BoardService.userSearch(map);
-			System.out.println(resultMap);	
-		return new Gson().toJson(resultMap);
-	}
+	
 }
