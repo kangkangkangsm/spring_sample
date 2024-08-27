@@ -36,17 +36,11 @@
 		}
 		</style>
 </head>
-
+<style>
+</style>
 <body>
 	<div id="app">
-		<div>
-			제목 : <input type="text" placeholder="제목" v-model="TITLE" >
-		</div>
-		<div>	
-			내용 <textarea cols ="30" rows="5" v-model="CONTENTS"></textarea>
-		</div>
-		<button @click="fnSave()"> 저장 </button>
-		<button @click="fnReset()"> 뒤로가기 </button>
+		
 	</div>
 </body>
 </html>
@@ -56,34 +50,12 @@
     const app = Vue.createApp({
         data() {
             return {
-                name : "홍길동",		
-				TITLE : "",
-				CONTENTS : ""
+           
             };
         },
         methods: {
-			fnSave(){
-					var self = this;
-					var nparmap = {TITLE : self.TITLE, CONTENTS : self.CONTENTS};
-					$.ajax({
-					url:"/board/add.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-					alert(data.message);
-					
-					location.href ="/board/list.do"
-					
-											}
-										});
-						            },
-			fnReset(){
-							location.href ="/board/list.do"
-			},
+         
         },
-	 
-		
         mounted() {
             var self = this;
 			

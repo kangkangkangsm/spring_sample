@@ -36,17 +36,28 @@
 		}
 		</style>
 </head>
-
+<style>
+</style>
 <body>
-	<div id="app">
-		<div>
-			제목 : <input type="text" placeholder="제목" v-model="TITLE" >
-		</div>
-		<div>	
-			내용 <textarea cols ="30" rows="5" v-model="CONTENTS"></textarea>
-		</div>
-		<button @click="fnSave()"> 저장 </button>
-		<button @click="fnReset()"> 뒤로가기 </button>
+	
+	
+	<div id="app">	
+		<!--
+		<template v-if="viewList.length>0">
+			{{viewList[0].boardNo}}
+		</template>
+		-->
+		
+			<div>게시번호 : {{viewList.boardNo}}</div>
+			<div>아이디 : {{viewList.USERID}}</div>
+			<div>제목 : {{viewList.TITLE}}</div>
+			<div>내용 : {{viewList.CONTENTS}}</div>
+			<div>조회수 : {{viewList.HIT}}</div>
+			<div>게시일 : {{viewList.CDATETIME}}</div>
+			<div>카테고리 : {{viewList.CATEGORY}}</div>
+			<div>좋아요 : {{viewList.FAVORITE}}</div>
+			
+		<button @click="fnBack()">돌아가기</button>
 	</div>
 </body>
 </html>
@@ -56,36 +67,33 @@
     const app = Vue.createApp({
         data() {
             return {
-                name : "홍길동",		
-				TITLE : "",
-				CONTENTS : ""
+           		boardNo : '${boardNo}',
+				viewList : {}
+				
             };
         },
         methods: {
-			fnSave(){
-					var self = this;
-					var nparmap = {TITLE : self.TITLE, CONTENTS : self.CONTENTS};
-					$.ajax({
-					url:"/board/add.dox",
+			fnBack() {
+				location.href ="/board/list.do"
+			},
+			fnView(){
+				var self = this;
+				var nparmap = {boardNo : self.boardNo};
+				$.ajax({
+					url:"/board/view.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-					alert(data.message);
-					
-					location.href ="/board/list.do"
-					
-											}
-										});
-						            },
-			fnReset(){
-							location.href ="/board/list.do"
-			},
+					self.viewList = data.info;
+					}
+				});
+	        },
+ 
         },
-	 
-		
         mounted() {
             var self = this;
+			self.fnView();
 			
         }
     });

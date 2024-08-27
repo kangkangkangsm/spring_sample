@@ -41,8 +41,9 @@
 <body>
 	<div id="app">
 			<div>
-				검색 : <input type="text" placeholder="제목" v-model="search">
+				검색 : <input type="text" placeholder="제목" v-model="search" @keyup.enter="fnSearch()">
 				<button @click="fnSearch()" > 검색 </button>
+				<button @click="fnReset()" > 초기화 </button>
 				
 			</div>
 			
@@ -57,14 +58,14 @@
 			</tr>
 			<tr v-for = "item in searchList">
 				<td>{{item.boardNo}}</td>
-				<td>{{item.TITLE}}</td>
-				<td>{{item.USERID}}</td>
+				<td><a href="#" @click="fnView(item.boardNo)">{{item.TITLE}}</a></td>
+				<td><a href="#" @click="fnUserView(item.USERID)">{{item.USERID}}</a></td>
 				<td>{{item.HIT}}</td>
 				<td>{{item.CDATETIME}}</td>
 				<td><button @click="fnRemove(item.boardNo)">삭제</button> </td>
 			</tr>
-					
 		</table> 
+			<button @click="fnAdd()" > 글쓰기</button>			
 		
 	</div>
 </body>
@@ -97,35 +98,47 @@
 				});
             },
 			fnRemove(num){
-							var self = this;
-							var nparmap = {boardNo : num};
-							$.ajax({
-								url:"/board/remove.dox",
-								dataType:"json",	
-								type : "POST", 
-								data : nparmap,
-								success : function(data) { 
-								alert(data.message);
-								self.fnSearch();
-								}
-							});
-			            },
+				var self = this;
+				var nparmap = {boardNo : num};
+				$.ajax({
+					url:"/board/remove.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+					alert(data.message);
+					self.fnSearch();
+					}
+				});
+            },
 			fnSearch(){
-								var self = this;
-								var nparmap = {search : self.search};
-								$.ajax({
-								url:"/board/search.dox",
-								dataType:"json",	
-								type : "POST", 
-								data : nparmap,
-								success : function(data) { 
-								self.searchList = data.list;
-							
-														}
-													});
-									            },
-						
-        },
+				var self = this;
+				var nparmap = {search : self.search};
+				$.ajax({
+					url:"/board/search.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+					self.searchList = data.list;
+					}
+				});
+            },
+			fnReset(){
+				this.search = ""; 
+				this.fnSearch(); 
+			},
+			fnAdd() {
+				location.href ="/board/insert.do"
+			},
+			fnView(boardNo){
+				//key : boardNo, value : 내가 누른 게시글의 boardNo(pk)
+				$.pageChange("/board/view.do",{boardNo : boardNo});
+				},
+			fnUserView(USERID){
+				$.pageChange("/board/userView.do",{userId : USERID});
+				}	
+			},
         mounted() {
             var self = this;
 			self.fnSearch();

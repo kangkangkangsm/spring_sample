@@ -40,13 +40,14 @@
 <body>
 	<div id="app">
 		<div>
-			제목 : <input type="text" placeholder="제목" v-model="TITLE" >
+			아이디 : <input type="text" placeholder="아이디" v-model="userId" >
 		</div>
-		<div>	
-			내용 <textarea cols ="30" rows="5" v-model="CONTENTS"></textarea>
+		<div>
+			비밀번호 : <input type="password" placeholder="비밀번호" v-model="pwd" >
 		</div>
-		<button @click="fnSave()"> 저장 </button>
-		<button @click="fnReset()"> 뒤로가기 </button>
+		
+		<button @click="fnLogin()"> 로그인하기 </button>
+		
 	</div>
 </body>
 </html>
@@ -56,34 +57,29 @@
     const app = Vue.createApp({
         data() {
             return {
-                name : "홍길동",		
-				TITLE : "",
-				CONTENTS : ""
+          		userId : "",
+				pwd : "",
             };
         },
         methods: {
-			fnSave(){
+			fnLogin(){
 					var self = this;
-					var nparmap = {TITLE : self.TITLE, CONTENTS : self.CONTENTS};
+					var nparmap = {userId : self.userId, pwd : self.pwd};
 					$.ajax({
-					url:"/board/add.dox",
+					url:"/login.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
 					alert(data.message);
+				
 					
-					location.href ="/board/list.do"
 					
 											}
 										});
 						            },
-			fnReset(){
-							location.href ="/board/list.do"
-			},
-        },
-	 
-		
+			
+        },	
         mounted() {
             var self = this;
 			

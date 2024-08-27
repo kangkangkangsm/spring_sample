@@ -17,5 +17,5 @@ public class Board {
 	private String CDATETIME;
 	private String UDATETIME;
 
-
+	
 }
