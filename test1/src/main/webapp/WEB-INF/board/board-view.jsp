@@ -47,7 +47,6 @@
 			{{viewList[0].boardNo}}
 		</template>
 		-->
-		
 			<div>게시번호 : {{viewList.boardNo}}</div>
 			<div>아이디 : {{viewList.USERID}}</div>
 			<div>제목 : {{viewList.TITLE}}</div>
@@ -56,7 +55,7 @@
 			<div>게시일 : {{viewList.CDATETIME}}</div>
 			<div>카테고리 : {{viewList.CATEGORY}}</div>
 			<div>좋아요 : {{viewList.FAVORITE}}</div>
-			
+	
 		<button @click="fnBack()">돌아가기</button>
 	</div>
 </body>

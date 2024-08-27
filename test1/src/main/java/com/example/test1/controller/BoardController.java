@@ -103,6 +103,7 @@ public class BoardController {
 		public String boardUserView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 			HashMap<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap = BoardService.userSearch(map);
+			System.out.println(resultMap);	
 		return new Gson().toJson(resultMap);
 	}
 }

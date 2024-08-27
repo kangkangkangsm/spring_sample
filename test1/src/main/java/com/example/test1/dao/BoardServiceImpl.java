@@ -62,7 +62,7 @@ public class BoardServiceImpl implements BoardService {
 		try {
 			Board Board = boardMapper.viewBoard(map);
 			resultMap.put("info", Board);
-			resultMap.put("result", "success.");
+			resultMap.put("result", "success");
 			resultMap.put("message", "검색되었습니다.");
 		} catch (Exception e) {
 			resultMap.put("result", "fail");
@@ -77,7 +77,7 @@ public class BoardServiceImpl implements BoardService {
 		try {
 			User User = boardMapper.viewUser(map);
 			resultMap.put("info", User);
-			resultMap.put("result", "success.");
+			resultMap.put("result", "success");
 			resultMap.put("message", "검색되었습니다.");
 			System.out.println(resultMap);
 		} catch (Exception e) {

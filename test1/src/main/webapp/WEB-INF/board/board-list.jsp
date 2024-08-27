@@ -142,6 +142,7 @@
         mounted() {
             var self = this;
 			self.fnSearch();
+			
         }
     });
     app.mount('#app');

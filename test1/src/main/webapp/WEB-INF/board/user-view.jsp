@@ -42,17 +42,17 @@
 	
 	
 	<div id="app">	
-		<!--
-		<template v-if="viewList.length>0">
-			{{viewList[0].boardNo}}
-		</template>
-		-->
 		
+			<template v-if="viewList.userId != null">
 			<div>아이디 : {{viewList.userId}}</div>
 			<div>이름 : {{viewList.userName}}</div>
 			<div>이메일 : {{viewList.email}}</div>
 			<div>전화번호 : {{viewList.phone}}</div>
 			<div>성별 : {{viewList.gender}}</div>
+			</template>
+		<template v-else>
+				<div>유저 정보가 없습니다.</div>
+			</template>	
 			
 			
 		<button @click="fnBack()">돌아가기</button>
@@ -92,7 +92,6 @@
         mounted() {
             var self = this;
 			self.fnUserView();
-			
         }
     });
     app.mount('#app');
