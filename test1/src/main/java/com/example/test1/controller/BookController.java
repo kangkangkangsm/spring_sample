@@ -3,6 +3,8 @@ package com.example.test1.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +37,11 @@ public class BookController {
         return "/book-insert";
     }
 	
+	@RequestMapping("/bookView.do") 
+    public String main3(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("bookId", map.get("bookId"));
+        return "/book-view";
+    }
 	
 	
 	
@@ -81,6 +88,13 @@ public class BookController {
 			
 		return new Gson().toJson(resultMap);
 		}		
+		@RequestMapping(value = "/bookView.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String bookView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap = BookService.viewBook(map);
+		return new Gson().toJson(resultMap);
+	}
 
 	
 }

@@ -11,6 +11,12 @@
 		ORDER BY BOOKID
 	</select>	
 	
+	<select id="bookView" parameterType="hashmap" resultType="com.example.test1.model.Book">
+		SELECT * 
+		FROM BOOK
+		WHERE BOOKID = #{bookId}
+	</select>	
+	
 	 <!-- 게시판 삭제 -->
     <delete id="deleteBook" parameterType="hashmap">
     

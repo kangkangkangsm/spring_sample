@@ -106,8 +106,8 @@
 						<th>수정</th>
 					</tr>
 					<tr v-for="item in booklist">
-					              <td>{{ item.bookId }}</td>
-					              <td v-if="!item.mode">{{ item.bookName }}</td>
+					              <td><a href="#" @click="fnView(item.bookId)">{{ item.bookId }}</a></td>
+					              <td v-if="!item.mode"><a href="#" @click="fnView(item.bookId)">{{ item.bookName }}</a></td>
 					              <td v-else><input v-model="item.bookName" /></td>
 
 					              <td v-if="!item.mode">{{ item.publisher }}</td>
@@ -140,6 +140,9 @@
 		            };
 		        },
 		        methods: {
+					fnView(bookId){
+							$.pageChange("/bookView.do",{bookId : bookId});
+							},
 		            fnSearch() {
 							var self = this;
 							var nparmap = {search : self.search};
@@ -169,35 +172,35 @@
 						});
 				    },					
 					fnReset() {
-						this.search = ""; // 검색어 초기화
-						this.fnSearch(); // 초기화 후 다시 검색 (전체 리스트를 불러옴)
+							this.search = ""; // 검색어 초기화
+							this.fnSearch(); // 초기화 후 다시 검색 (전체 리스트를 불러옴)
 					},
 					fnAdd(){
-						location.href ="list.do"
+						    location.href ="list.do"
 					},
 					fnUpdate(item) {
-					  item.mode = true; // 해당 항목의 수정 모드 활성화
+						    item.mode = true; // 해당 항목의 수정 모드 활성화
 		            },
 					fnSave(item) {
-								            var self = this;
-								            var nparmap = {
-								            bookId: item.bookId,
-								            bookName: item.bookName,
-								            publisher: item.publisher,
-								            price: item.price
-								              };
-								            $.ajax({
-								            url: "update.dox", // 서버 측 업데이트 URL
-								            dataType: "json",
-								            type: "POST",
-								            data: nparmap,
-								            success: function (data) {
-								            alert(data.message);
-								            item.mode = false; // 수정 모드 비활성화
-								            self.fnSearch(); // 데이터를 다시 불러옵니다
-								              }
-								             });
-								          }			
+				            var self = this;
+				            var nparmap = {
+				            bookId: item.bookId,
+				            bookName: item.bookName,
+				            publisher: item.publisher,
+				            price: item.price
+				              };
+				            $.ajax({
+				            url: "update.dox", // 서버 측 업데이트 URL
+				            dataType: "json",
+				            type: "POST",
+				            data: nparmap,
+				            success: function (data) {
+				            alert(data.message);
+				            item.mode = false; // 수정 모드 비활성화
+				            self.fnSearch(); // 데이터를 다시 불러옵니다
+				              }
+				             });
+				          }			
 		        },
 		        mounted() {
 		            var self = this;

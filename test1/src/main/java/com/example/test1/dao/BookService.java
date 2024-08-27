@@ -15,4 +15,6 @@ public interface BookService {
 	
 	HashMap<String, Object> addBook(HashMap<String, Object> map);
 	HashMap<String, Object> updateBook(HashMap<String, Object> map);
+	
+	HashMap<String, Object> viewBook(HashMap<String, Object> map);
 }

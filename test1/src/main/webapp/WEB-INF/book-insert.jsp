@@ -41,6 +41,7 @@
 	<div id="app">
 		<div>
 			No. : <input type="text" placeholder="책넘버" v-model="bookId" >
+			<button @click="fnCheck()">중복확인</button>
 		</div>
 		<div>	
 			책이름 : <input type="text" placeholder="책이름" v-model="bookName">	
@@ -89,6 +90,27 @@
 			fnReset() {
 					location.href ="book.do"
 						},
+			fnCheck(){
+						var self = this;
+						var nparmap = {bookId : self.bookId};
+						$.ajax({
+							url:"/bookView.dox",
+							dataType:"json",	
+							type : "POST", 
+							data : nparmap,
+							success : function(data) { 
+								if(self.bookId == ""){
+									alert("책ID 입력하세요");
+									return;
+								}
+								if(data.BookInfo == undefined){
+									alert("책 등록가능!");
+								}else{
+									alert("중복된아이디!");
+								}
+							}
+						});
+			        },			
 			
         },	
 	 

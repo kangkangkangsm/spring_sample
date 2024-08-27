@@ -19,6 +19,8 @@ public interface BookMapper {
 	void insertBook(HashMap<String, Object> map);
 	void updateBook(HashMap<String, Object> map);
 	
+	Book bookView(HashMap<String, Object> map);
+	
 	//게시판 삭제 
 	
 	/*
