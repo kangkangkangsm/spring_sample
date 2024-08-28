@@ -20,9 +20,9 @@
 	 <!-- 게시판 삭제 -->
     <delete id="deleteBook" parameterType="hashmap">
     
-        delete 
-        from BOOK 
-        where BOOKID = #{bookId}
+        DELETE 
+        FROM BOOK 
+        WHERE BOOKID = #{bookId}
     </delete>
     <insert id="insertBook" parameterType="hashmap">
  	

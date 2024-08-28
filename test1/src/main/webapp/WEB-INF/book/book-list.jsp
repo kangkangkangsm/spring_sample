@@ -103,27 +103,15 @@
 						<th>분야</th>
 						<th>가격</th>
 						<th>삭제</th>
-						<th>수정</th>
+					
 					</tr>
 					<tr v-for="item in booklist">
-					              <td><a href="#" @click="fnView(item.bookId)">{{ item.bookId }}</a></td>
-					              <td v-if="!item.mode"><a href="#" @click="fnView(item.bookId)">{{ item.bookName }}</a></td>
-					              <td v-else><input v-model="item.bookName" /></td>
-
-					              <td v-if="!item.mode">{{ item.publisher }}</td>
-					              <td v-else><input v-model="item.publisher" /></td>
-
-					              <td v-if="!item.mode">{{ item.price }}</td>
-					              <td v-else><input v-model="item.price" /></td>
-
-					              <td><button @click="fnRemove(item.bookId)">삭제</button></td>
-					              <td v-if="!item.mode">
-					                  <button @click="fnUpdate(item)">수정</button>
-					              </td>
-					              <td v-else>
-					                  <button @click="fnSave(item)">저장</button>
-					              </td>
-					          </tr>
+			             <td><a href="#" @click="fnView(item.bookId)">{{ item.bookId }}</a></td>
+						 <td>{{ item.bookName }}</td>
+						 <td>{{ item.publisher }}</td>
+			             <td>{{ item.price }}</td>
+			             <td><button @click="fnRemove(item.bookId)">삭제</button></td>
+					</tr>
 				</table>
 				<button @click="fnAdd()" > 글쓰기 </button>
 			</div>
@@ -157,9 +145,9 @@
 							}
 						});
 		            },
-					fnRemove(num){
+					fnRemove(bookId){
 							var self = this;
-							var nparmap = {bookId : num};
+							var nparmap = {bookId : bookId};
 							$.ajax({
 							url: "remove.dox",
 							dataType:"json",	
@@ -178,29 +166,7 @@
 					fnAdd(){
 						    location.href ="list.do"
 					},
-					fnUpdate(item) {
-						    item.mode = true; // 해당 항목의 수정 모드 활성화
-		            },
-					fnSave(item) {
-				            var self = this;
-				            var nparmap = {
-				            bookId: item.bookId,
-				            bookName: item.bookName,
-				            publisher: item.publisher,
-				            price: item.price
-				              };
-				            $.ajax({
-				            url: "update.dox", // 서버 측 업데이트 URL
-				            dataType: "json",
-				            type: "POST",
-				            data: nparmap,
-				            success: function (data) {
-				            alert(data.message);
-				            item.mode = false; // 수정 모드 비활성화
-				            self.fnSearch(); // 데이터를 다시 불러옵니다
-				              }
-				             });
-				          }			
+					
 		        },
 		        mounted() {
 		            var self = this;

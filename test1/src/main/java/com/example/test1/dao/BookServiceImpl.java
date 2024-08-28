@@ -26,7 +26,6 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public HashMap<String, Object> removeBook(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
-		System.out.println(map);
 		try {
 			BookMapper.deleteBook(map);
 			resultMap.put("message", "삭제되었습니다.");
@@ -65,10 +64,11 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public HashMap<String, Object> viewBook(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
+	
 		try {
 			Book Book = BookMapper.bookView(map);
 			resultMap.put("BookInfo", Book);
-			resultMap.put("message", "검색되었습니다.");
+			resultMap.put("message", "책 정보조회 완료");
 		} catch (Exception e) {
 			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");
 		}

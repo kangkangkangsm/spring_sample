@@ -23,4 +23,5 @@ public interface BoardMapper {
 	Board viewBoard(HashMap<String, Object> map);
 	
 	
+	
 }

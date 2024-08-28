@@ -17,7 +17,6 @@ public interface BoardService {
 	List<Board> boardSearch(HashMap<String, Object> map);
 	
 	HashMap<String, Object> viewSearch(HashMap<String, Object> map);
-	
-	
+
 	
 }

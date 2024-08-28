@@ -28,19 +28,19 @@ public class BookController {
 	@RequestMapping("/book.do") 
     public String main(Model model) throws Exception{
 
-        return "/book-list";
+        return "/book/book-list";
     }
 	
 	@RequestMapping("/list.do") 
     public String main2(Model model) throws Exception{
 
-        return "/book-insert";
+        return "/book/book-insert";
     }
 	
 	@RequestMapping("/bookView.do") 
     public String main3(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("bookId", map.get("bookId"));
-        return "/book-view";
+        return "/book/book-view";
     }
 	
 	

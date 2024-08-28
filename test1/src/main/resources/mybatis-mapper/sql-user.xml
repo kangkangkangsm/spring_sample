@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.test1.mapper.UserMapper">
-
+	<!-- 회원가입 -->
     <insert id="join" parameterType="hashmap">
  	
     INSERT INTO TBL_USER
@@ -11,7 +11,7 @@
 	
 	</insert>
 
- 
+ 	<!-- 로그인 -->
  	<select id="login" parameterType="hashmap" resultType="com.example.test1.model.User">		
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
 		SELECT * 
@@ -19,7 +19,7 @@
 		WHERE userId = #{userId} AND pwd = #{pwd}
 
 	</select>
-	
+	<!-- 유저 상세정보 -->
 	<select id="viewUser" parameterType="hashmap" resultType="com.example.test1.model.User">		
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
 		SELECT * 
@@ -27,4 +27,18 @@
 		WHERE USERID = #{userId} 
 
 	</select>
+	<!-- 유저 리스트 -->
+	<select id="selectUserList" parameterType="hashmap" resultType="com.example.test1.model.User">		
+						<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
+		SELECT * 
+		FROM TBL_USER
+		WHERE 
+		userId LIKE '%' || #{search} || '%' OR 
+		userName LIKE '%' || #{search} || '%'  
+	</select>
+	<!-- 유저 삭제-->
+	<delete id="deleteUser" parameterType="hashmap">		
+		DELETE FROM TBL_USER
+		WHERE userId = #{userId} 
+	</delete>
 </mapper>

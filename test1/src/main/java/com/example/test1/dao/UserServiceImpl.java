@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired  
 	UserMapper UserMapper;
 
+		// 회원가입
 	@Override
 	public HashMap<String, Object> userJoin(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
@@ -31,7 +32,9 @@ public class UserServiceImpl implements UserService {
 		}
 		return resultMap;
 	}
-
+		
+	
+		//로그인
 	@Override
 	public HashMap<String, Object> userLogin(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService {
 		return resultMap;
 	}
 
+		// 유저 상세정보
 	@Override
 	public HashMap<String, Object> userSearch(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
@@ -60,7 +64,8 @@ public class UserServiceImpl implements UserService {
 		}
 		return resultMap;
 	}
-	
+
+		// 중복체크
 	@Override
 	public HashMap<String, Object> idCheck(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
@@ -74,5 +79,35 @@ public class UserServiceImpl implements UserService {
 		}
 		return resultMap;
 	}
+
+
+	//유저 리스트
+	@Override
+	public HashMap<String, Object> userList(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		try {
+			List<User> list = UserMapper.selectUserList(map);
+			resultMap.put("list", list);
+			resultMap.put("result", "데이터 잘 불러왔음");
+		} catch (Exception e) {
+			resultMap.put("result", "데이터 못불러옴");
+		}
+		return resultMap;
+	}
+
+
+	@Override
+	public HashMap<String, Object> userDelete(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		try {
+			UserMapper.deleteUser(map);
+			resultMap.put("message", "삭제되었습니다.");
+		} catch (Exception e) {
+			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");
+		}
+		return resultMap;
+	}
+
+
 
 }
