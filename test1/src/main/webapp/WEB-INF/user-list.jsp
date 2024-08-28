@@ -54,7 +54,7 @@
 					<th>삭제</th>
 			    </tr>
 				<tr v-for = "item in userList">
-					<td>{{item.userId}}</td>
+					<td><a href="#" @click="fnUserV(item.userId)">{{item.userId}}</td>
 					<td>{{item.userName}}</td>
 					<td>{{item.email}}</td>
 					<td>{{item.phone}}</td>
@@ -115,6 +115,9 @@
 					}
 				});
 	        },
+			fnView(userId){
+					$.pageChange("/view.do",{userId : userId});
+					},
         },
         mounted() {
 			var self = this;

@@ -40,10 +40,11 @@
 </style>
 <body>
 	<div id="app">
+		
 			<div>
 				<select v-model="boardType">
-					<option value="">::전체::</option>
-					<option value="TITLE">제목</option>
+					<option value="all">::전체::</option>
+					<option value="title">제목</option>
 					<option value="userName">작성자</option>
 				</select>
 				검색 : <input type="text" placeholder="제목" v-model="search" @keyup.enter="fnSearch()">
