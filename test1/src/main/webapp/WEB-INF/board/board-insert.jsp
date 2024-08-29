@@ -5,46 +5,42 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
+	<!-- Quill CDN -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+	
 	<title>첫번째 페이지</title>	
 	<style>
-		table{
-			th {
-			  
-			    color: black; /* 텍스트 색상 */
-			    padding: 3px 2px;
-			    text-align: left;
-			}
-
-			/* 테이블 셀 스타일 */
-			td {
-			    padding: 3px 2px;
-			    border: 1px solid #ddd; /* 테두리 색상 */
-			}
-
-			/* 테이블 전체 테두리 스타일 */
-			table{
-				width:100%;
-			}
-			table, th, td {
-			    border: 1px solid #ddd;
-			}
-
-			/* 테이블 전체 스타일 조정 */
-			th, td {
-			    text-align: center;
-			}
+		body {
+				margin: 20px auto;
+				background-color: #cccccc;
+				width:50%;
+					
+				}
+		#app {
+				background: #ffffff;
+				padding: 20px;
+				border-radius: 8px;
+				
+				}		
+	    button{
+				padding:5px 10px;	
+				width:15%;
+				
 		}
 		</style>
 </head>
 
 <body>
 	<div id="app">
+	
 		<div>
-			제목 : <input type="text" placeholder="제목" v-model="TITLE" >
+			제목  <input type="text" placeholder="제목" v-model="TITLE" >
 		</div>
 		<div>	
-			내용 <textarea cols ="30" rows="5" v-model="CONTENTS"></textarea>
+			내용  <div id="editor"></div>
 		</div>
+	
 		<button @click="fnSave()"> 저장 </button>
 		<button @click="fnReset()"> 뒤로가기 </button>
 	</div>
@@ -55,8 +51,7 @@
 	   
     const app = Vue.createApp({
         data() {
-            return {
-                name : "홍길동",		
+            return {	
 				TITLE : "",
 				CONTENTS : ""
             };
@@ -79,15 +74,29 @@
 										});
 						            },
 			fnReset(){
-							location.href ="/board/list.do"
+					location.href ="/board/list.do"
 			},
         },
-	 
-		
-        mounted() {
-            var self = this;
-			
-        }
+		mounted: function () {
+		        // Quill 에디터 초기화
+		        var quill = new Quill('#editor', {
+		            theme: 'snow',
+		            modules: {
+		                toolbar: [
+		                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+		                    ['bold', 'italic', 'underline'],
+		                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+		                    ['link', 'image'],
+		                    ['clean']
+		                ]
+		            }
+		        });
+
+		        // 에디터 내용이 변경될 때마다 Vue 데이터를 업데이트
+		        quill.on('text-change', function() {
+		           this.contents = quill.root.innerHTML;
+		        });
+		    }
     });
     app.mount('#app');
 </script>

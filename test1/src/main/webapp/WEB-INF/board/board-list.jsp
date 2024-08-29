@@ -97,6 +97,9 @@
 				<template v-if ="item.CATEGORY == '3'">	
 				<td>질문게시판</td>
 				</template>
+				<template v-if ="item.CATEGORY == null">	
+				<td>구분없음</td>
+				</template>
 				<td><button @click="fnRemove(item.boardNo)">삭제</button> </td>
 				
 			</tr>

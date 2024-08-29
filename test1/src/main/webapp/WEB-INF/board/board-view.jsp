@@ -42,19 +42,9 @@
 	
 	
 	<div id="app">	
-		<!--
-		<template v-if="viewList.length>0">
-			{{viewList[0].boardNo}}
-		</template>
-		-->
-			<div>게시번호 : {{viewList.boardNo}}</div>
-			<div>아이디 : {{viewList.USERID}}</div>
-			<div>제목 : {{viewList.TITLE}}</div>
-			<div>내용 : {{viewList.CONTENTS}}</div>
-			<div>조회수 : {{viewList.HIT}}</div>
-			<div>게시일 : {{viewList.CDATETIME}}</div>
-			<div>카테고리 : {{viewList.CATEGORY}}</div>
-			<div>좋아요 : {{viewList.FAVORITE}}</div>
+	
+			제목 : {{viewList.TITLE}}<br>
+			내용 : <div v-html = "viewList.CONTENTS"></div>
 	
 		<button @click="fnBack()">돌아가기</button>
 	</div>

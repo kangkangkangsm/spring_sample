@@ -38,6 +38,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public HashMap<String, Object> addBoard(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
+		System.out.println(map);
 		try {
 			boardMapper.insertBoard(map);
 			resultMap.put("result", "success.");
