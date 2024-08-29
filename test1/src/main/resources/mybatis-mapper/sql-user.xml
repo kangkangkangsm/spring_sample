@@ -32,9 +32,21 @@
 						<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
 		SELECT * 
 		FROM TBL_USER
-		WHERE 
-		userId LIKE '%' || #{search} || '%' OR 
-		userName LIKE '%' || #{search} || '%'  
+		WHERE 1=1
+		
+        <if test="gender !=null and gender !=''">
+        	AND GENDER = #{gender}
+        </if>
+		<if test="boardType == 'all'">
+   			AND (email LIKE '%' || #{search} || '%' OR userId LIKE '%' || #{search} || '%')     
+        </if>
+        <if test="boardType == 'email'">
+       		AND email LIKE '%' || #{search} || '%'  
+        </if>
+        <if test="boardType == 'userId'">
+     		AND userId LIKE '%' || #{search} || '%'
+        </if>
+		
 	</select>
 	<!-- 유저 삭제-->
 	<delete id="deleteUser" parameterType="hashmap">		

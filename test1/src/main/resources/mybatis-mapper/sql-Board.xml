@@ -27,13 +27,40 @@
 	
 	</insert>
 
-	<select id="searchBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">		
-								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
-		SELECT * FROM TBL_BOARD B 
-		INNER JOIN TBL_USER U ON U.userId = B.userId
-		WHERE TITLE LIKE '%' || #{search} || '%'
-	
-	</select>	
+	<select id="searchBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">
+    SELECT * 
+    FROM TBL_BOARD B
+    INNER JOIN TBL_USER U ON U.userId = B.userId
+    WHERE 1=1 
+    	<if test="category != '' and category != null">
+    	AND CATEGORY = #{category}
+    	</if>  
+    	<if test="boardType == 'all'">
+   		AND (TITLE LIKE '%' || #{search} || '%' OR USERNAME LIKE '%' || #{search} || '%')      
+        </if>
+        <if test="boardType == 'title'">
+        AND TITLE LIKE '%' || #{search} || '%'
+        </if>
+        <if test="boardType == 'userName'">
+     	AND USERNAME LIKE '%' || #{search} || '%'
+        </if>
+</select>
+        
+        
+        
+        <!--        <when test="num == 0">
+        
+        </when>
+        <when test="num == 1">
+        WHERE CATEGORY = '1'
+        </when>
+         <when test="num == 2">
+        WHERE CATEGORY = '2'
+        </when>
+         <when test="num == 3">
+        WHERE CATEGORY = '3'
+        </when>
+        <when test="boardType == 'all'">-->
 	
 	<select id="viewBoard" parameterType="hashmap" resultType="com.example.test1.model.Board">		
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->

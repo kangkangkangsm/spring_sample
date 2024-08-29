@@ -54,6 +54,8 @@
 		<template v-else>
 			<div>책 정보 없음!</div>
 		</template>				
+		<button @click="fnBookDelete(BookInfo.bookId)">삭제</button>
+		<button @click="fnback()">돌아가기</button>
 	</div>
 </body>
 </html>
@@ -69,6 +71,9 @@
             };
         },
         methods: {
+			fnback(){
+				history.back()
+			},	
 			fnBookView(){
 				var self = this;
 				var nparmap = {bookId : self.bookId};
@@ -83,6 +88,24 @@
 					}
 				});
 	        },
+			fnBookDelete(bookId) {
+				var self = this;
+				var nparmap = {bookId : bookId};
+				if(!confirm("정말 삭제하시겠습니까?")){
+					return;
+				}
+				$.ajax({
+				url: "/books-delete.dox",
+				dataType: "json",
+				type: "POST",
+				data: nparmap,
+				success: function(data) {
+					alert(data.message);
+					location.href="../Loan.do"	
+				}
+			});
+        },
+								
  
         },
         mounted() {

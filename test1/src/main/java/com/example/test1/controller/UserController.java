@@ -48,6 +48,17 @@ public class UserController {
     public String main5(Model model) throws Exception {
         return "/user-list";
     }
+   
+    @RequestMapping("/view.do")  // 변경된 URL 경로
+    public String main6(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        request.setAttribute("userId", map.get("userId"));
+        return "/user-view";
+    }
+    @RequestMapping("/board/userView.do")  // 변경된 URL 경로
+    public String main7(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        request.setAttribute("userId", map.get("userId"));
+        return "/user-view";
+    }
     
     //회원가입 
     @RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

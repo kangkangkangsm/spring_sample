@@ -70,7 +70,7 @@
         },
         methods: {
 			fnBack1() {
-				location.href ="/board/list.do"
+			       window.history.back();
 			},
 			fnUserView(){
 				var self = this;

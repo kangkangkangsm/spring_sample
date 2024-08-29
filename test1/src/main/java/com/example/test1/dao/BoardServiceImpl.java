@@ -51,7 +51,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<Board> boardSearch(HashMap<String, Object> map) {
-		System.out.println(map);
+	
 		return boardMapper.searchBoardList(map);
 		
 	}

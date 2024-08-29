@@ -8,6 +8,18 @@
 	<title>user 리스트 출력</title>
 </head>
 <style>
+	
+	div li {
+		    display: inline-block;
+		    margin-left: 20px;
+			background-color:yellow;
+		}
+
+		div li:first-child {
+		    margin-left: 30px; /* 첫 번째 li 요소에는 마진을 주지 않음 */
+		}
+		
+		
 	table{
 		th {
 		  
@@ -39,10 +51,21 @@
 	</style>
 <body>
 	<div id="app">
-		<button>게시글목록(userController에서 가져오기)</button>
+		
 			<div>
-			<input placeholder="검색" v-model="search">
-			<button @click="fnSearch()">검색</button>		
+					<ul>
+						<a style="color:red;">성별 선택>></a>
+						<li><a href="#" @click="fnGender('')">전체</a></li>
+						<li><a href="#" @click="fnGender('M')">남자</a></li>
+						<li><a href="#" @click="fnGender('F')">여자</a></li>
+					</ul>
+					<select v-model="boardType">
+						<option value="all">전체</option>
+						<option value="userId">아이디</option>
+						<option value="email">이메일</option>
+					</select>	
+				<input tpye="text" placeholder="검색" v-model="search" @keyup.enter="fnSearch()">
+				<button @click="fnSearch()">검색</button>		
 			</div>
 			<table>
 				<tr>
@@ -54,8 +77,8 @@
 					<th>삭제</th>
 			    </tr>
 				<tr v-for = "item in userList">
-					<td><a href="#" @click="fnUserV(item.userId)">{{item.userId}}</td>
-					<td>{{item.userName}}</td>
+					<td><a href="#" @click="fnUserV(item.userId)">{{item.userId}}</a></td>
+					<td><a href="#" @click="fnUserV(item.userId)">{{item.userName}}</a></td>
 					<td>{{item.email}}</td>
 					<td>{{item.phone}}</td>
 				<template v-if ="item.gender == 'M'">	
@@ -70,6 +93,8 @@
 					<td><button @click="fnDelete(item.userId)">삭제</button></td>
 				</tr>
 			</table>
+			<button @click="fnAdd">유저만들기</button>
+			<button @click="fnMoveBoard">게시판 이동</button>
 	</div>
 </body>
 </html>
@@ -78,14 +103,24 @@
         data() {
             return {
 				userList : [],
-				search : ""
+				search : "",
+				boardType : "all",
+				gender : ""
 				
             };
         },
         methods: {
+			fnGender(gender){
+				var self = this;
+				self.gender = gender;
+				self.fnSearch();
+			},
 			fnDelete(userId){
 				var self = this;
 				var nparmap = {userId : userId};
+				if(!confirm("삭제하실래요?")){
+					return;	
+				}
 				$.ajax({
 					url: "user-delete.dox",
 					dataType: "json",
@@ -101,7 +136,7 @@
         },
 			fnSearch() {
 					var self = this;
-					var nparmap = {search : self.search};
+					var nparmap = {search : self.search, boardType : self.boardType, gender : self.gender};
 					$.ajax({
 						url: "user-list.dox",
 						dataType: "json",
@@ -115,9 +150,15 @@
 					}
 				});
 	        },
-			fnView(userId){
+			fnUserV(userId){
 					$.pageChange("/view.do",{userId : userId});
 					},
+			fnAdd(){
+				location.href ="join.do"
+			},
+			fnMoveBoard(){
+				location.href ="/board/list.do"
+			},
         },
         mounted() {
 			var self = this;

@@ -84,6 +84,7 @@ public class UserServiceImpl implements UserService {
 	//유저 리스트
 	@Override
 	public HashMap<String, Object> userList(HashMap<String, Object> map) {
+		System.out.println(map);
 		HashMap<String, Object> resultMap = new HashMap<>();
 		try {
 			List<User> list = UserMapper.selectUserList(map);

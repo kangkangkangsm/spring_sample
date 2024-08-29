@@ -42,21 +42,20 @@
 	
 	
 	<div id="app">	
-		<!--
-		<template v-if="viewList.length>0">
-			{{viewList[0].boardNo}}
-		</template>
-		-->
-			<div>게시번호 : {{viewList.boardNo}}</div>
-			<div>아이디 : {{viewList.USERID}}</div>
-			<div>제목 : {{viewList.TITLE}}</div>
-			<div>내용 : {{viewList.CONTENTS}}</div>
-			<div>조회수 : {{viewList.HIT}}</div>
-			<div>게시일 : {{viewList.CDATETIME}}</div>
-			<div>카테고리 : {{viewList.CATEGORY}}</div>
-			<div>좋아요 : {{viewList.FAVORITE}}</div>
-	
-		<button @click="fnBack()">돌아가기</button>
+		
+			<template v-if="viewList.userId != null">
+			<div>아이디 : {{viewList.userId}}</div>
+			<div>이름 : {{viewList.userName}}</div>
+			<div>이메일 : {{viewList.email}}</div>
+			<div>전화번호 : {{viewList.phone}}</div>
+			<div>성별 : {{viewList.gender}}</div>
+			</template>
+		<template v-else>
+			<div>유저 정보 없음!</div>
+		</template>				
+		<button @click="fnBack1()">유저리스트 돌아가기</button>
+		<button @click="fnBack2()">게시판 돌아가기</button>
+		<button @click="fnDelete(viewList.userId)">삭제</button>
 	</div>
 </body>
 </html>
@@ -66,20 +65,43 @@
     const app = Vue.createApp({
         data() {
             return {
-           		boardNo : '${boardNo}',
+           		userId : '${userId}',
 				viewList : {}
 				
             };
         },
         methods: {
-			fnBack() {
-				history.back();
+			fnDelete(userId){
+					var self = this;
+					var nparmap = {userId : userId};
+					if(!confirm("삭제하실래요?")){
+						return;	
+					}
+					$.ajax({
+						url: "user-delete.dox",
+						dataType: "json",
+						type: "POST",
+						data: nparmap,
+						success: function(data) {
+						alert(data.message);
+						location.href ="user-list.do"
+						
+						
+						
+					}
+				});
 			},
-			fnView(){
+			fnBack1() {
+				location.href ="/user-list.do"
+			},
+			fnBack2() {
+				location.href ="/board/list.do"
+			},
+			fnUserView(){
 				var self = this;
-				var nparmap = {boardNo : self.boardNo};
+				var nparmap = {userId : self.userId};
 				$.ajax({
-					url:"/board/view.dox",
+					url:"/user-view.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
@@ -92,8 +114,7 @@
         },
         mounted() {
             var self = this;
-			self.fnView();
-			
+			self.fnUserView();
         }
     });
     app.mount('#app');

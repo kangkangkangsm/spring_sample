@@ -7,6 +7,15 @@
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 	<title>첫번째 페이지</title>	
 	<style>
+		
+		div li {
+		    display: inline-block;
+		    margin-left: 20px;
+		}
+
+		div li:first-child {
+		    margin-left: 0; /* 첫 번째 li 요소에는 마진을 주지 않음 */
+		}
 		table{
 			th {
 			  
@@ -40,10 +49,18 @@
 </style>
 <body>
 	<div id="app">
+		<div>
+		   <ul style="margin: 20px;">
+		     <li><a href="#" @click="fnCategory('')">전체</a></li>
+		     <li><a href="#" @click="fnCategory('1')">공지사항</a></li>
+		     <li><a href="#" @click="fnCategory('3')">질문게시판</a></li>
+		     <li><a href="#" @click="fnCategory('2')">자유게시판</a></li>
+		   </ul>
+		 </div>	
 		
 			<div>
 				<select v-model="boardType">
-					<option value="all">::전체::</option>
+					<option value="all">전체</option>
 					<option value="title">제목</option>
 					<option value="userName">작성자</option>
 				</select>
@@ -60,8 +77,9 @@
 				<th>작성자</th>
 				<th>조회수</th>
 				<th>작성일</th>
+				<th>게시글종류</th>
 				<th>삭제</th>
-				<th>수정</th>
+				
 			</tr>
 			<tr v-for = "item in searchList">
 				<td>{{item.boardNo}}</td>
@@ -69,12 +87,22 @@
 				<td><a href="#" @click="fnUserView(item.USERID)">{{item.userName}}</a></td>
 				<td>{{item.HIT}}</td>
 				<td>{{item.CDATETIME}}</td>
+				
+				<template v-if ="item.CATEGORY == '1'">	
+				<td>공지사항</td>
+				</template>
+				<template v-if ="item.CATEGORY == '2'">	
+				<td>자유게시판</td>
+				</template>
+				<template v-if ="item.CATEGORY == '3'">	
+				<td>질문게시판</td>
+				</template>
 				<td><button @click="fnRemove(item.boardNo)">삭제</button> </td>
-				<td><button @click="fnUpdate(item.boardNo)">수정</button> </td>
+				
 			</tr>
 		</table> 
 			<button @click="fnAdd()" > 글쓰기</button>			
-		
+			<button @click="fnMoveBoard">유저 리스트이동</button>
 	</div>
 </body>
 </html>
@@ -88,24 +116,16 @@
 				boardList : [],
 				search : "",
 				searchList : [],
-				boardType:""
+				boardType: "all",
+				category : ""
             };
         },
         methods: {
-            fnGetList(){
+			fnCategory(category){
 				var self = this;
-				var nparmap = {};
-				$.ajax({
-					url:"/board/list.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						console.log(data);
-						self.boardList = data.list;
-					}
-				});
-            },
+				self.category = category;
+				self.fnSearch();		
+			},
 			fnRemove(num){
 				var self = this;
 				var nparmap = {boardNo : num};
@@ -122,7 +142,7 @@
             },
 			fnSearch(){
 				var self = this;
-				var nparmap = {search : self.search};
+				var nparmap = {search : self.search, boardType : self.boardType, category : self.category};
 				$.ajax({
 					url:"/board/search.dox",
 					dataType:"json",	
@@ -146,7 +166,10 @@
 				},
 			fnUserView(USERID){
 				$.pageChange("/board/userView.do",{userId : USERID});
-				}	
+				},
+			fnMoveBoard(){
+				location.href ="/user-list.do"
+			},	
 			},
         mounted() {
             var self = this;
