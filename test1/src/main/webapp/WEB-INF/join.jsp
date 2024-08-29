@@ -66,6 +66,8 @@
 			
 		</div>	
 		<button @click="fnSave()"> 가입하기 </button>
+		<button style="margin-left:130px" @click="fnLogin()"> 로그인하기 </button>
+		
 		
 		
 	</div>
@@ -87,6 +89,9 @@
             };
         },
         methods: {
+			fnLogin(){
+					location.href = "login.do";
+						},
 		
 			fnSave(){
 					var self = this;

@@ -3,6 +3,8 @@ package com.example.test1.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,11 @@ import com.example.test1.model.User;
 public class UserServiceImpl implements UserService {
 	@Autowired  
 	UserMapper UserMapper;
-
-		// 회원가입
+	
+	@Autowired
+	HttpSession session;
+	
+	// 회원가입
 	@Override
 	public HashMap<String, Object> userJoin(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
@@ -38,12 +43,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public HashMap<String, Object> userLogin(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
-		System.out.println(map);		
 		try {
 			User User = UserMapper.login(map);	
 			resultMap.put("login", User);
+			resultMap.put("message", "로그인 완료");
 		} catch (Exception e) {
-			resultMap.put("message", "fail");
+			resultMap.put("message", "예기치 못한 문제 발생 \n 나중에 다시 확인");
 		}
 		return resultMap;
 	}

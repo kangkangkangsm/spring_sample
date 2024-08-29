@@ -7,6 +7,8 @@
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 	<title>첫번째 페이지</title>	
 	<style>
+		
+					
 		table{
 			th {
 			  
@@ -39,14 +41,17 @@
 
 <body>
 	<div id="app">
-		<div>
+		
+		
+		<div style="margin-left:600px; margin-top:200px;">
 			아이디 : <input type="text" placeholder="아이디" v-model="userId" >
 		</div>
-		<div>
+		<div style="margin-left:600px;">
 			비밀번호 : <input type="password" placeholder="비밀번호" v-model="pwd" >
 		</div>
 		
-		<button @click="fnLogin()"> 로그인하기 </button>
+		<button style="margin-left:600px;" @click="fnJoin">회원가입</button>
+		<button style="margin-left:145px;" @click="fnLogin()"> 로그인 </button>
 		
 	</div>
 </body>
@@ -76,15 +81,20 @@
 							return;
 						}
 						if(data.login == undefined){
+							console.log(data.message);
 							alert("로그인 실패!");
 						}else{
 							alert("로그인 성공! 게시판으로 이동할게요! ");
+							console.log(data.message);
 							location.href ="/board/list.do"
 						}
 					
 											}
 										});
 						            },
+			fnJoin(){
+				location.href = "join.do";
+			}
 			
         },	
         mounted() {
