@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.test1.mapper.SchoolMapper">
+	
+	<!-- 유저 리스트 -->
+	<select id="selectStudentList" parameterType="hashmap" resultType="com.example.test1.model.School">		
+	select STUNO,NAME,substr(id,1,length(id)-3) || '***' as ID,GRADE,SUBSTR(JUMIN,1,6) || '-' || SUBSTR(JUMIN,7,1) || '******' AS JUMIN
+	FROM STU 
+	</select>
+	
+	<delete id="deleteStudent" parameterType="hashmap">		
+	DELETE FROM STU WHERE STUNO = #{stuNo}
+	</delete>
+	
+	<select id="selectStudentView" parameterType="hashmap" resultType="com.example.test1.model.School">		
+	
+	SELECT stuNo,S.NAME AS NAME , D1.DNAME AS DDName , D.DNAME AS d2DName ,P.NAME AS pName FROM  STU S 
+	INNER JOIN PROFESSOR P ON S.PROFNO = P.PROFNO
+	INNER JOIN DEPARTMENT D ON P.DEPTNO = D.DEPTNO
+	INNER JOIN DEPARTMENT D1 ON D.PART = D1.DEPTNO
+	WHERE stuNo = #{stuNo}
+	</select>
+	
+	<insert id="insertStudent" parameterType="hashmap">		
+	insert into stu(stuno,name,id,jumin) values(#{stuNo},#{name},#{id},#{jumin})
+	</insert>
+	
+	<select id="stuInsert" parameterType="hashmap" resultType="com.example.test1.model.School">		
+	SELECT * FROM STU WHERE stuNo = #{stuNo}
+	</select>
+	
+</mapper>

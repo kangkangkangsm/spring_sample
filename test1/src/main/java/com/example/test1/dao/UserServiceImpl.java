@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService {
 		return resultMap;
 	}
 		
-	
-		//로그인
+			//로그인
+	// 세션 JWT 버전 또 있음 
 	@Override
 	public HashMap<String, Object> userLogin(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService {
 			User User = UserMapper.login(map);	
 			resultMap.put("login", User);
 			resultMap.put("message", "로그인 완료");
+			resultMap.put("result", "success");
+			
+			session.setAttribute("sessionId", User.getUserId());
+			session.setAttribute("sessionName", User.getUserName());
+			session.setAttribute("sessionStatus", User.getStatus());
+			session.setAttribute("sessionEmail", User.getEmail());
 		} catch (Exception e) {
 			resultMap.put("message", "예기치 못한 문제 발생 \n 나중에 다시 확인");
 		}

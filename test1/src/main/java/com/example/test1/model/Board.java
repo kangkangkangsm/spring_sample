@@ -17,5 +17,6 @@ public class Board {
 	private String CDATETIME;
 	private String UDATETIME;
 	private String userName;
+	private String email;
 	
 }

@@ -23,7 +23,7 @@
  	<insert id="insertBoard" parameterType="hashmap">
  	
     INSERT INTO TBL_BOARD (BOARDNO, TITLE, CONTENTS, HIT, USERID, CDATETIME, UDATETIME)
-    VALUES (board_seq.NEXTVAL, #{TITLE}, #{CONTENTS}, 0, 'admin', SYSDATE, SYSDATE)
+    VALUES (board_seq.NEXTVAL, #{TITLE}, #{CONTENTS}, 0, #{userId}, SYSDATE, SYSDATE)
 	
 	</insert>
 

@@ -43,12 +43,18 @@
 			    text-align: center;
 			}
 		}
+		div ul li{
+			background:yellow;
+			border-radius:5px;
+			padding : 5px 10px;
+		}
 		</style>
 </head>
 <style>
 </style>
 <body>
 	<div id="app">
+	<div>로그인 아이디 : {{sessionId}} </div>
 		<div>
 		   <ul style="margin: 20px;">
 		     <li><a href="#" @click="fnCategory('')">전체</a></li>
@@ -100,12 +106,17 @@
 				<template v-if ="item.CATEGORY == null">	
 				<td>구분없음</td>
 				</template>
+				<template v-if="item.email == sessionEmail || sessionStatus == 'A'">
 				<td><button @click="fnRemove(item.boardNo)">삭제</button> </td>
-				
+				</template>
+				<template v-else>
+				<td> X </td>
+				</template>
 			</tr>
 		</table> 
 			<button @click="fnAdd()" > 글쓰기</button>			
 			<button @click="fnMoveBoard">유저 리스트이동</button>
+		
 	</div>
 </body>
 </html>
@@ -120,10 +131,14 @@
 				search : "",
 				searchList : [],
 				boardType: "all",
-				category : ""
+				category : "",
+				sessionId : '${sessionId}',
+				sessionEmail : '${sessionEmail}',
+				sessionStatus : '${sessionStatus}'
             };
         },
         methods: {
+			
 			fnCategory(category){
 				var self = this;
 				self.category = category;

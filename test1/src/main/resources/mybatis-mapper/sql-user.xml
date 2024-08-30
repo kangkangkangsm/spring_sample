@@ -44,7 +44,7 @@
        		AND email LIKE '%' || #{search} || '%'  
         </if>
         <if test="boardType == 'userId'">
-     		AND userId LIKE '%' || #{search} || '%'
+     		AND userId LIKE '%' || #{search} || '%'	
         </if>
 		
 	</select>

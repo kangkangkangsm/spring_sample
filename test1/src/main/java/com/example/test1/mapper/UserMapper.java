@@ -23,4 +23,5 @@ public interface UserMapper {
 	List<User> selectUserList(HashMap<String, Object> map);
 	//유저 삭제 
 	void deleteUser(HashMap<String, Object> map);
+	
 }

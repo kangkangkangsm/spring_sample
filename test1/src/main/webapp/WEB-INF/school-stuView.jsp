@@ -43,20 +43,12 @@
 	
 	<div id="app">	
 		
-			<table>
-			<tr>
-				<th>제목</th>
-				<td>{{viewList.TITLE}}</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td><div v-html = "viewList.CONTENTS"></div></td>
-			</tr>	
-			</table>
-		<button @click="fnBack()">돌아가기</button>
-		<template v-if="viewList.USERID == sessionId || sessionStatus == 'A'">
-		<button @click="fnRemove(viewList.boardNo)">삭제</button>
-		</template>
+			
+			<div>학번 : {{viewList.stuNo}}</div>
+			<div>이름 : {{viewList.name}}</div>
+			<div>학부 : {{viewList.dDName}}</div>
+			<div>학과 : {{viewList.d2DName}}</div>
+			<div>담당 교수 : {{viewList.pName}}</div>
 	</div>
 </body>
 </html>
@@ -66,41 +58,22 @@
     const app = Vue.createApp({
         data() {
             return {
-           		boardNo : '${boardNo}',
-				viewList : {},
-				sessionId : '${sessionId}',
-				sessionStatus : '${sessionStatus}'
+           		stuNo : '${stuNo}',
+				viewList : {}
 				
             };
         },
         methods: {
-			fnBack() {
-				history.back();
-			},
-			fnRemove(num){
+			fnUserView(){
 				var self = this;
-				var nparmap = {boardNo : num};
+				var nparmap = {stuNo : self.stuNo};
 				$.ajax({
-					url:"/board/remove.dox",
+					url:"studentUser-view.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-					alert(data.message);
-					location.href="/board/list.do"
-					}
-				});
-            },
-			fnView(){
-				var self = this;
-				var nparmap = {boardNo : self.boardNo};
-				$.ajax({
-					url:"/board/view.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-					self.viewList = data.info;
+					self.viewList = data.list;
 					}
 				});
 	        },
@@ -108,8 +81,7 @@
         },
         mounted() {
             var self = this;
-			self.fnView();
-			
+			self.fnUserView();
         }
     });
     app.mount('#app');
