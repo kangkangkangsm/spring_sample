@@ -26,7 +26,6 @@ public class SchoolServiceImpl implements SchoolService {
 	//유저 리스트
 	@Override
 	public HashMap<String, Object> SchoolUserSearch(HashMap<String, Object> map) {
-		System.out.println(map);
 		HashMap<String, Object> resultMap = new HashMap<>();
 		try {
 			List<School> list = SchoolMapper.selectStudentList(map);
@@ -55,7 +54,7 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public HashMap<String, Object> userList(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
-		System.out.println(map);
+		
 		try {	
 			School School = SchoolMapper.selectStudentView(map);
 			resultMap.put("list", School);
@@ -70,7 +69,7 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public HashMap<String, Object> userInsert(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
-		System.out.println(map);
+	
 		try {	
 			SchoolMapper.insertStudent(map);
 			resultMap.put("result", "생성완료");
@@ -79,21 +78,32 @@ public class SchoolServiceImpl implements SchoolService {
 		}
 		return resultMap;
 	}
-
+	//유저 수정
 	@Override
-	public HashMap<String, Object> upuser(HashMap<String, Object> map) {
+	public HashMap<String, Object> userUpdate(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
-		System.out.println(map);
 		try {	
-			School School = SchoolMapper.stuInsert(map);
-			resultMap.put("list", School);
-			
+			SchoolMapper.updateStudent(map);
+			resultMap.put("message", "수정완료");
 		} catch (Exception e) {
-			resultMap.put("result", "처리못함");
+			resultMap.put("message", "처리못함");
 		}
 		return resultMap;
-
 	}
+
+	@Override
+	public HashMap<String, Object> userUpdate2(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		try {	
+			SchoolMapper.update2Student(map);
+			resultMap.put("message", "수정완료");
+		} catch (Exception e) {
+			resultMap.put("message", "처리못함");
+		}
+		return resultMap;
+	}
+
+	
 
 
 

@@ -49,7 +49,10 @@
 			<div>학부 : {{viewList.dDName}}</div>
 			<div>학과 : {{viewList.d2DName}}</div>
 			<div>담당 교수 : {{viewList.pName}}</div>
+			
+			<button @click="fnBack()">뒤로가기</button>
 	</div>
+	
 </body>
 </html>
 <script>
@@ -64,6 +67,9 @@
             };
         },
         methods: {
+			fnBack(){
+				history.back();
+			},
 			fnUserView(){
 				var self = this;
 				var nparmap = {stuNo : self.stuNo};

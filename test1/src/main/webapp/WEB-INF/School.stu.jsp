@@ -52,6 +52,7 @@
 	</style>
 <body>
 	<div id="app">
+		
 			<table>
 				<tr>
 					<th>학번</th>
@@ -60,16 +61,30 @@
 					<th>학년</th>
 					<th>주민번호</th>
 					<th>삭제</th>
-					<th>수정</th>
+					<th>O수정</th>
+					<th>I수정</th>
 			    </tr>
 				<tr v-for = "item in userList">
 					<td>{{item.stuNo}}</td>
-					<td><a @click="fnView(item.stuNo)">{{item.name}}</a></td>
+					<template v-if="item.stuNo === updateStuNo">
+					<td><input style="width:60px; text-align : center;" type="text" v-model = "item.name"></td>	
+					<td><input style="width:60px; text-align : center;" type="text" v-model = "item.id"></td>
+					<td><input style="width:60px; text-align : center;" type="text" v-model = "item.grade"></td>
+					</template>
+					<template v-else>
+	                <td><a href="#" v-else @click="fnView(item.stuNo)">{{item.name}}</a></td>							
 					<td>{{item.id}}</td>
-					<td>{{item.grade}}</td>
+					<td>{{item.grade}}</td>	
+					</template>	
 					<td>{{item.jumin}}</td>
-					<td><button @click="fnDelete(item.stuNo)">삭제</button>
-					<td><button @click="fnUpdate(item.stuNo)">수정</button>
+					<td><button @click="fnDelete(item.stuNo)">삭제</button></td>
+					<td><button @click="fnUpdate(item.stuNo)">O수정</button></td>
+					<template v-if="item.stuNo === updateStuNo">
+					<td><button @click="fnSava(item.stuNo,item.name,item.id,item.grade)">IN저장</button></td>
+					</template>
+					<template v-else>
+					<td><button @click="fnUpdate2(item.stuNo)">IN수정</button></td>
+					</template>			
 			</table>
 			<button @click="fnAdd()">유저생성</button>
 	</div>
@@ -79,7 +94,10 @@
     const app = Vue.createApp({
         data() {
             return {
-				userList : []
+				userList : [],
+				updateStuNo : '${updateStuNo}',
+				updateList : {}
+				
 				
             };
         },
@@ -118,6 +136,23 @@
 					}
 				});
 	        },
+			fnSava(stuNo,name,id,grade) {
+								if(!confirm("수정합니다?")){
+									return;
+								}
+								var self = this;
+								var nparmap = {stuNo : stuNo,name : name,id : id,grade: grade};
+								$.ajax({
+									url: "update2-list.dox",
+									dataType: "json",
+									type: "POST",
+									data: nparmap,
+									success: function(data) {	
+									alert(data.message);
+									location.href="/school-stu.do";
+								}
+							});
+			},
 			fnAdd(){
 				location.href="/school-insert.do"
 			},
@@ -125,7 +160,10 @@
 				$.pageChange("/school-stuView.do",{stuNo : stuNo});
 			},
 			fnUpdate(stuNo){
-				$.pageChange("/school-insert.do",{stuNo : stuNo});
+				$.pageChange("/school-update.do",{stuNo : stuNo});
+			},
+			fnUpdate2(stuNo){
+				$.pageChange("/school-stu.do",{updateStuNo : stuNo});
 			},
 			
         },

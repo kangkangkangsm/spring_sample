@@ -22,6 +22,8 @@ public interface SchoolService {
 	HashMap<String, Object> userDelete(HashMap<String, Object> map);
 	//유저 생성
 	HashMap<String, Object> userInsert(HashMap<String, Object> map);
-	
-	HashMap<String, Object> upuser(HashMap<String, Object> map);
-	}
+	//유저 저장
+	HashMap<String, Object> userUpdate(HashMap<String, Object> map);
+	//유저 저장
+	HashMap<String, Object> userUpdate2(HashMap<String, Object> map);
+}

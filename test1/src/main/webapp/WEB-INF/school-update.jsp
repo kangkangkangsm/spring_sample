@@ -40,18 +40,18 @@
 <body>
 	<div id="app">
 		<div>
-		학번 : <input type="text" placeholder="stuNo" v-model="stuNo">
+		학번 : <input type="text" placeholder="stuNo" v-model="userList.stuNo" disabled>
 		</div>
 		<div>	
-		아이디 : <input type="text" placeholder="id" v-model="id">	
+		아이디 : <input type="text" placeholder="id" v-model="userList.id">	
 		</div>
 		<div>
-		이름 : <input type="text" placeholder="name" v-model="name">
+		이름 : <input type="text" placeholder="name" v-model="userList.name">
 		</div>
 		<div>	
-		주민 : <input type="text" placeholder="jumin" v-model="jumin">
+		주민 : <input type="text" placeholder="jumin" v-model="userList.jumin">
 		</div>
-		<button @click="fnSave()"> 저장 </button>
+		<button @click="fnSave(userList.stuNo,userList.id,userList.name,userList.jumin)"> 저장 </button>
 		<button @click="fnback()"> 돌아가기 </button>
 	</div>
 </body>
@@ -62,10 +62,6 @@
     const app = Vue.createApp({
         data() {
             return {
-				stuNo : "",
-				name : "",
-				id : "",
-				jumin : "",
 				userList : {},
 				stuNo : '${stuNo}'
 				
@@ -75,18 +71,18 @@
 			fnback() {
 			    history.back();
 		},
-			fnSave(){
+			fnSave(stuNo,id,name,jumin){
 					var self = this;
-					var nparmap = {stuNo : self.stuNo, name : self.name,
-								   id : self.id, jumin : self.jumin
+					var nparmap = {stuNo : stuNo, name : name,
+								   id : id, jumin : jumin
 							   };
 					$.ajax({
-					url:"insert-list.dox",
+					url:"update-list.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-					alert(data.result);
+					alert(data.message);
 					location.href="/school-stu.do";
 					
 					

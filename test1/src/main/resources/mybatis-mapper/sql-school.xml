@@ -16,19 +16,34 @@
 	
 	<select id="selectStudentView" parameterType="hashmap" resultType="com.example.test1.model.School">		
 	
-	SELECT stuNo,S.NAME AS NAME , D1.DNAME AS DDName , D.DNAME AS d2DName ,P.NAME AS pName FROM  STU S 
+	SELECT stuNo,S.NAME AS NAME , S.id AS id, jumin, D1.DNAME AS DDName , D.DNAME AS d2DName ,P.NAME AS pName FROM  STU S 
 	INNER JOIN PROFESSOR P ON S.PROFNO = P.PROFNO
 	INNER JOIN DEPARTMENT D ON P.DEPTNO = D.DEPTNO
 	INNER JOIN DEPARTMENT D1 ON D.PART = D1.DEPTNO
-	WHERE stuNo = #{stuNo}
+	WHERE STUNO = #{stuNo}
 	</select>
 	
 	<insert id="insertStudent" parameterType="hashmap">		
-	insert into stu(stuno,name,id,jumin) values(#{stuNo},#{name},#{id},#{jumin})
+	insert into stu(stuno,name,id,jumin,profno) values(#{stuNo},#{name},#{id},#{jumin},2002)
 	</insert>
 	
-	<select id="stuInsert" parameterType="hashmap" resultType="com.example.test1.model.School">		
-	SELECT * FROM STU WHERE stuNo = #{stuNo}
-	</select>
+	<update id="updateStudent" parameterType="hashmap">		
+	UPDATE stu 
+	SET 
+	name = #{name},
+	id = #{id},
+	jumin = #{jumin}
+	where stuNo = #{stuNo}
+	</update>
+	
+	<update id="update2Student" parameterType="hashmap">		
+	UPDATE stu 
+	SET 
+	name = #{name},
+	id = #{id},
+	grade = #{grade}
+	where stuNo = #{stuNo}
+	</update>
+	
 	
 </mapper>

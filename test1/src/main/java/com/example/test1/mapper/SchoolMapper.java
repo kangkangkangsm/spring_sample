@@ -24,8 +24,8 @@ public interface SchoolMapper {
 	void deleteStudent(HashMap<String, Object> map);
 	//유저 생성
 	void insertStudent(HashMap<String, Object> map);
-
-	School stuInsert(HashMap<String, Object> map);
-
-	
+	//유저 out수정
+	void updateStudent(HashMap<String, Object> map);
+	//유서 in수정
+	void update2Student(HashMap<String, Object> map);
 }
