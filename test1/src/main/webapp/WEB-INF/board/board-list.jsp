@@ -7,7 +7,28 @@
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 	<title>첫번째 페이지</title>	
 	<style>
-		
+		#container {
+		    display: flex;
+		    justify-content: space-between;
+			height: 100vh; /* 화면 전체 높이 사용 */
+			
+		}
+
+		#container #container1 {
+		    width: 48%; /* 왼쪽 컨테이너의 너비 */
+		    background-color: #f0f0f0; /* 배경 색상 (원하는 색상으로 변경 가능) */
+		    padding: 10px; /* 패딩 */
+		    border-radius: 5px; /* 모서리를 둥글게 */
+		    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 */
+		}
+
+		#container #container2 {
+		    width: 48%; /* 오른쪽 컨테이너의 너비 */
+		    background-color: #f0f0f0; /* 배경 색상 (원하는 색상으로 변경 가능) */
+		    padding: 10px; /* 패딩 */
+		    border-radius: 5px; /* 모서리를 둥글게 */
+		    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 */
+		}
 		div li {
 		    display: inline-block;
 		    margin-left: 20px;
@@ -54,6 +75,8 @@
 </style>
 <body>
 	<div id="app">
+	<div id="container">
+	<div id="container1">
 	<div>로그인 아이디 : {{sessionId}} </div>
 		<div>
 		   <ul style="margin: 20px;">
@@ -116,7 +139,10 @@
 		</table> 
 			<button @click="fnAdd()" > 글쓰기</button>			
 			<button @click="fnMoveBoard">유저 리스트이동</button>
-		
+			</div>
+			<div id="container2">
+				</div>
+		<div>
 	</div>
 </body>
 </html>
