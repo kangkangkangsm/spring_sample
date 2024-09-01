@@ -67,9 +67,19 @@
 				<tr v-for = "item in userList">
 					<td>{{item.stuNo}}</td>
 					<template v-if="item.stuNo === updateStuNo">
-					<td><input style="width:60px; text-align : center;" type="text" v-model = "item.name"></td>	
-					<td><input style="width:60px; text-align : center;" type="text" v-model = "item.id"></td>
-					<td><input style="width:60px; text-align : center;" type="text" v-model = "item.grade"></td>
+					<td><input style="width:40px; text-align : center;" type="text" v-model = "item.name"  @keyup.enter="fnSava(item.stuNo,item.name,item.id,item.grade)"></td>	
+					<td><input style="width:60px; text-align : center;" type="text" v-model = "item.id" @keyup.enter="fnSava(item.stuNo,item.name,item.id,item.grade)"></td>
+					<td>
+						<select v-model ="item.grade">
+							<option value="item.grade">{{item.grade}}</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+						</select>
+					</td>
 					</template>
 					<template v-else>
 	                <td><a href="#" v-else @click="fnView(item.stuNo)">{{item.name}}</a></td>							
@@ -85,6 +95,7 @@
 					<template v-else>
 					<td><button @click="fnUpdate2(item.stuNo)">IN수정</button></td>
 					</template>			
+					
 			</table>
 			<button @click="fnAdd()">유저생성</button>
 	</div>

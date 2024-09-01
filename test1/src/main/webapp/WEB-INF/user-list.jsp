@@ -96,6 +96,12 @@
 			</table>
 			<button @click="fnAdd">유저만들기</button>
 			<button @click="fnMoveBoard">게시판 이동</button>
+			<template v-if="sessionId">
+				<button @click="fnLogout">로그아웃</button>
+			</template>
+			<template v-if="!sessionId">
+				<button @click="fnLogin">로그인</button>
+			</template>
 	</div>
 </body>
 </html>
@@ -106,11 +112,18 @@
 				userList : [],
 				search : "",
 				boardType : "all",
+				sessionId : '${sessionId}',
 				gender : ""
 				
             };
         },
         methods: {
+			fnLogin(){
+				location.href="login.do";
+			},
+			fnLogout(){
+				location.href="login.do";
+			},
 			fnGender(gender){
 				var self = this;
 				self.gender = gender;

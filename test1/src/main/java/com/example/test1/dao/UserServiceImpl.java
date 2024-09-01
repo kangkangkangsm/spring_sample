@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public HashMap<String, Object> userJoin(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
-		System.out.println(map);
+		System.out.println("service>>>>>>>>>>>>" + map);
 		try {
 			UserMapper.join(map);
 			resultMap.put("message", "회원가입 완료, 로그인페이지로 이동합니다.");

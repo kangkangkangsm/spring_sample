@@ -64,6 +64,7 @@ public class UserController {
     @RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String insertUser(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+    	System.out.println("controller>>>>>>>>>>>>" + map);
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap = userService.userJoin(map);
         return new Gson().toJson(resultMap);
@@ -84,7 +85,7 @@ public class UserController {
     public String boardUserView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap = userService.userSearch(map);
-        System.out.println(resultMap);    
+
         return new Gson().toJson(resultMap);
     }
     
@@ -94,7 +95,6 @@ public class UserController {
     public String idCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap = userService.idCheck(map);
-        System.out.println(resultMap);    
         return new Gson().toJson(resultMap);
     }
     
