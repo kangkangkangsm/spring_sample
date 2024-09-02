@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 	<title>user 리스트 출력</title>
 </head>
 <style>
@@ -46,13 +49,64 @@
 		/* 테이블 전체 스타일 조정 */
 		th, td {
 		    text-align: center;
+		}}
+		.pagination {
+			    justify-content: center;
+			    align-items: center;
+			    margin: 20px 0;
+				
 		}
-		
-	}
+		.pagination button {
+		    background-color: #f8f9fa;
+		    border: 1px solid #dee2e6;
+		    color: #007bff;
+		    padding: 8px 12px;
+		    margin: 0 2px;
+		    cursor: pointer;
+		    transition: background-color 0.3s, color 0.3s;
+		    border-radius: 4px;
+		}
+	
+		.pagination button:hover {
+		    background-color: #007bff;
+		    color: white;
+		}
+	
+		.pagination button.active {
+		    background-color: #007bff;
+		    color: white;
+		    cursor: default;
+		}
+	
+		.pagination button:disabled {
+		    background-color: #e9ecef;
+		    color: #6c757d;
+		    cursor: not-allowed;
+		    border: 1px solid #dee2e6;
+		}
+	
+		.pagination button:not(.active):not(:disabled):hover {
+		    background-color: #0056b3;
+		    color: white;
+		}
+
+	
 	</style>
 <body>
 	<div id="app">
 		
+		<div>
+			<i class="fa-solid fa-user"></i> {{cnt}}
+			<span class="material-symbols-outlined">
+			toggle_on
+			</span>
+		</div>
+		
+		<select v-model="pageSize" @change="fnSearch(1)">
+				<option value='5'>5개 </option>
+				<option value='10'>10개 </option>
+				<option value='15'>15개 </option>
+				</select>	
 			<table>
 				<tr>
 					<th>학번</th>
@@ -61,8 +115,8 @@
 					<th>학년</th>
 					<th>주민번호</th>
 					<th>삭제</th>
-					<th>O수정</th>
-					<th>I수정</th>
+					<th>OUT</th>
+					<th>IN</th>
 			    </tr>
 				<tr v-for = "item in userList">
 					<td>{{item.stuNo}}</td>
@@ -88,16 +142,25 @@
 					</template>	
 					<td>{{item.jumin}}</td>
 					<td><button @click="fnDelete(item.stuNo)">삭제</button></td>
-					<td><button @click="fnUpdate(item.stuNo)">O수정</button></td>
+					<td><button @click="fnUpdate(item.stuNo)">수정</button></td>
 					<template v-if="item.stuNo === updateStuNo">
-					<td><button @click="fnSava(item.stuNo,item.name,item.id,item.grade)">IN저장</button></td>
+					<td><button @click="fnSava(item.stuNo,item.name,item.id,item.grade)">저장</button></td>
 					</template>
 					<template v-else>
-					<td><button @click="fnUpdate2(item.stuNo)">IN수정</button></td>
+					<td><button @click="fnUpdate2(item.stuNo)">수정</button></td>
 					</template>			
 					
 			</table>
 			<button @click="fnAdd()">유저생성</button>
+			
+			<div class="pagination">
+					    <button v-if="currentPage > 1">이전</button>
+					    <button v-for="page in totalPages" :class="{active: page == currentPage}" @click="fnSearch(page)">
+					        {{ page }}
+					    </button>
+					    <button v-if="currentPage < totalPages">다음</button>
+					</div>
+					</div>
 	</div>
 </body>
 </html>
@@ -107,15 +170,22 @@
             return {
 				userList : [],
 				updateStuNo : '${updateStuNo}',
-				updateList : {}
+				updateList : {},
+				currentPage: 1,      // 현재 페이지 
+				pageSize: 5,        // 한페이지에 보여줄 개수 
+				totalPages:5,
+				cnt :''
 				
 				
             };
         },
         methods: {
-			fnSearch() {
+			fnSearch(page) {
 					var self = this;
-					var nparmap = {};
+					var startIndex = (page-1) * self.pageSize;
+					var outputNumber = self.pageSize;
+					var nparmap = {startIndex : startIndex, outputNumber : outputNumber };
+					self.currentPage = page;
 					$.ajax({
 						url: "school-list.dox",
 						dataType: "json",
@@ -124,6 +194,8 @@
 						success: function(data) {
 						console.log(data);
 						self.userList = data.list;
+						self.cnt = data.cnt;
+						self.totalPages = Math.ceil(data.cnt/self.pageSize);
 						
 						
 						
@@ -180,7 +252,7 @@
         },
         mounted() {
 			var self = this;
-			self.fnSearch(); 
+			self.fnSearch(1); 
         }
     });
     app.mount('#app');

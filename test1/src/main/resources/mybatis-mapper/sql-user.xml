@@ -53,4 +53,5 @@
 		DELETE FROM TBL_USER
 		WHERE userId = #{userId} 
 	</delete>
+	
 </mapper>

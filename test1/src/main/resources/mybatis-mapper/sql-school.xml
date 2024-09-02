@@ -8,8 +8,12 @@
 	<select id="selectStudentList" parameterType="hashmap" resultType="com.example.test1.model.School">		
 	select STUNO,NAME,substr(id,1,length(id)-3) || '***' as ID,GRADE,SUBSTR(JUMIN,1,6) || '-' || SUBSTR(JUMIN,7,1) || '******' AS JUMIN
 	FROM STU 
+    OFFSET #{startIndex} ROWS FETCH FIRST #{outputNumber} ROWS ONLY
 	</select>
 	
+	<select id="countStudent" parameterType="hashmap" resultType="int">		
+	SELECT COUNT(*) AS CNT FROM STU
+	</select>
 	<delete id="deleteStudent" parameterType="hashmap">		
 	DELETE FROM STU WHERE STUNO = #{stuNo}
 	</delete>

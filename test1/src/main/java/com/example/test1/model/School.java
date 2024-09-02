@@ -39,6 +39,7 @@ public class School {
 	private String dPart;
 	private String dBuild;
 	
-	
+	// 리스트 개수 
+	private String CNT;
 	
 }

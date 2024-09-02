@@ -53,6 +53,7 @@
 			<button @click="fnBack()">뒤로가기</button>
 	</div>
 	
+	
 </body>
 </html>
 <script>

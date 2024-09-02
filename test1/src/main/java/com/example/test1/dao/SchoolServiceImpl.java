@@ -29,6 +29,8 @@ public class SchoolServiceImpl implements SchoolService {
 		HashMap<String, Object> resultMap = new HashMap<>();
 		try {
 			List<School> list = SchoolMapper.selectStudentList(map);
+			int cnt = SchoolMapper.countStudent(map);
+			resultMap.put("cnt", cnt);
 			resultMap.put("list", list);
 			resultMap.put("result", "데이터 잘 불러왔음");
 		} catch (Exception e) {
@@ -102,6 +104,14 @@ public class SchoolServiceImpl implements SchoolService {
 		}
 		return resultMap;
 	}
+
+	@Override
+	public int countUser(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return SchoolMapper.countStudent(map);
+	}
+
+	
 
 	
 

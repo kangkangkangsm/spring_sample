@@ -26,4 +26,6 @@ public interface SchoolService {
 	HashMap<String, Object> userUpdate(HashMap<String, Object> map);
 	//유저 저장
 	HashMap<String, Object> userUpdate2(HashMap<String, Object> map);
+	// 유저수 
+	int countUser(HashMap<String, Object> map);
 }

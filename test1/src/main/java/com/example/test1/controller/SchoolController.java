@@ -52,6 +52,7 @@ public class SchoolController {
     @ResponseBody
     public String userList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
         HashMap<String, Object> resultMap = new HashMap<>();
+
         resultMap = SchoolService.SchoolUserSearch(map);
         return new Gson().toJson(resultMap);
     }

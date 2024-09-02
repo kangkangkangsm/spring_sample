@@ -18,5 +18,10 @@ public class Board {
 	private String UDATETIME;
 	private String userName;
 	private String email;
+	private int cnt;
+	
+	private String commentNo;
+	
+	
 	
 }
