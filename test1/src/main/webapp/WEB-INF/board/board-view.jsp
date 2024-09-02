@@ -34,6 +34,12 @@
 			    text-align: center;
 			}
 		}
+		a strong{
+			color:red;
+		
+			width:10px;
+		
+		}
 		</style>
 </head>
 <style>
@@ -54,6 +60,11 @@
 			</tr>	
 			</table>
 		<button @click="fnBack()">돌아가기</button>
+		<hr>
+		[댓그르르르]
+		<template v-for="item in vList">
+		<div><a><strong>{{item.USERID}} : </strong> {{item.CONTENTS}}</a></div>
+		</template>			
 		<template v-if="viewList.USERID == sessionId || sessionStatus == 'A'">
 		<button @click="fnRemove(viewList.boardNo)">삭제</button>
 		</template>
@@ -69,7 +80,8 @@
            		boardNo : '${boardNo}',
 				viewList : {},
 				sessionId : '${sessionId}',
-				sessionStatus : '${sessionStatus}'
+				sessionStatus : '${sessionStatus}',
+				vList : []
 				
             };
         },
@@ -100,7 +112,9 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
+						console.log(data);
 					self.viewList = data.info;
+					self.vList = data.vList;
 					}
 				});
 	        },

@@ -15,7 +15,8 @@
 		}
 
 		#container #container1 {
-		    width: 48%; /* 왼쪽 컨테이너의 너비 */
+			margin: 0 auto;
+		    width: 40%; /* 왼쪽 컨테이너의 너비 */
 		    background-color: #f0f0f0; /* 배경 색상 (원하는 색상으로 변경 가능) */
 		    padding: 10px; /* 패딩 */
 		    border-radius: 5px; /* 모서리를 둥글게 */
@@ -65,10 +66,48 @@
 			}
 		}
 		div ul li{
-			background:yellow;
+			background:#007bff;
 			border-radius:5px;
 			padding : 5px 10px;
 		}
+		.pagination {
+			    justify-content: center;
+			    align-items: center;
+			    margin: 20px 0;
+			}
+			.pagination button {
+			    background-color: #f8f9fa;
+			    border: 1px solid #dee2e6;
+			    color: #007bff;
+			    padding: 8px 12px;
+			    margin: 0 2px;
+			    cursor: pointer;
+			    transition: background-color 0.3s, color 0.3s;
+			    border-radius: 4px;
+			}
+
+			.pagination button:hover {
+			    background-color: #007bff;
+			    color: white;
+			}
+
+			.pagination button.active {
+			    background-color: #007bff;
+			    color: white;
+			    cursor: default;
+			}
+
+			.pagination button:disabled {
+			    background-color: #e9ecef;
+			    color: #6c757d;
+			    cursor: not-allowed;
+			    border: 1px solid #dee2e6;
+			}
+
+			.pagination button:not(.active):not(:disabled):hover {
+			    background-color: #0056b3;
+			    color: white;
+			}
 		</style>
 </head>
 <style>
@@ -93,9 +132,14 @@
 					<option value="title">제목</option>
 					<option value="userName">작성자</option>
 				</select>
-				검색 : <input type="text" placeholder="제목" v-model="search" @keyup.enter="fnSearch()">
+				검색 : <input type="text" placeholder="제목" v-model="search" @keyup.enter="fnSearch(1)">
 				<button @click="fnSearch()" > 검색 </button>
 				<button @click="fnReset()" > 초기화 </button>
+				<select v-model="pageSize" @change="fnSearch(1)">
+					<option value='5'>5개</option>
+					<option value='10'>10개</option>
+					<option value='15'>15개</option>
+				</select>
 				
 			</div>
 			
@@ -139,9 +183,14 @@
 		</table> 
 			<button @click="fnAdd()" > 글쓰기</button>			
 			<button @click="fnMoveBoard">유저 리스트이동</button>
+			<div class="pagination">
+			    <button @click="fnSearch(currentPage - 1)" :disabled="currentPage <= 1">이전</button>
+			    <button v-for="page in totalPages" :class="{active: page == currentPage}" @click="fnSearch(page)">
+			        {{ page }}
+			    </button>
+			    <button @click="fnSearch(currentPage + 1)" :disabled="currentPage >= totalPages">다음</button>
 			</div>
-			<div id="container2">
-				</div>
+			
 		<div>
 	</div>
 </body>
@@ -160,7 +209,11 @@
 				category : "",
 				sessionId : '${sessionId}',
 				sessionEmail : '${sessionEmail}',
-				sessionStatus : '${sessionStatus}'
+				sessionStatus : '${sessionStatus}',
+				currentPage: 1,      
+				pageSize: 5,        
+				totalPages: 5,
+				cnt :''
             };
         },
         methods: {
@@ -168,7 +221,7 @@
 			fnCategory(category){
 				var self = this;
 				self.category = category;
-				self.fnSearch();		
+				self.fnSearch(1);		
 			},
 			fnRemove(num){
 				var self = this;
@@ -180,26 +233,33 @@
 					data : nparmap,
 					success : function(data) { 
 					alert(data.message);
-					self.fnSearch();
+					self.fnSearch(1);
 					}
 				});
             },
-			fnSearch(){
+			fnSearch(page){
 				var self = this;
-				var nparmap = {search : self.search, boardType : self.boardType, category : self.category};
+				var startIndex = (page-1) * self.pageSize;
+				var outputNumber = self.pageSize;
+				self.currentPage = page;
+				var nparmap = {search : self.search, boardType : self.boardType, category : self.category,
+								startIndex : startIndex, outputNumber : outputNumber};
 				$.ajax({
 					url:"/board/search.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
+						console.log(data);
 					self.searchList = data.list;
+					self.cnt = data.cnt;
+					self.totalPages = Math.ceil(self.cnt/self.pageSize);
 					}
 				});
             },
 			fnReset(){
 				this.search = ""; 
-				this.fnSearch(); 
+				this.fnSearch(1); 
 			},
 			fnAdd() {
 				location.href ="/board/insert.do"
@@ -217,7 +277,7 @@
 			},
         mounted() {
             var self = this;
-			self.fnSearch();
+			self.fnSearch(1);
 			
         }
     });

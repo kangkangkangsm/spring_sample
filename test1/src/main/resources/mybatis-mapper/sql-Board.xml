@@ -4,11 +4,24 @@
 
 <mapper namespace="com.example.test1.mapper.BoardMapper">
 		
-	<select id="selectBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">		
-								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
-		SELECT * 
-		FROM TBL_BOARD
-
+	<select id="selectPaging" parameterType="hashmap" resultType="int">		
+							<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
+		SELECT count(*) AS CNT
+		FROM TBL_BOARD B
+    	INNER JOIN TBL_USER U ON U.userId = B.userId
+    	WHERE 1=1 
+    	<if test="category != '' and category != null">
+    	AND CATEGORY = #{category}
+    	</if>  
+    	<if test="boardType == 'all'">
+   		AND (TITLE LIKE '%' || #{search} || '%' OR USERNAME LIKE '%' || #{search} || '%')      
+        </if>
+        <if test="boardType == 'title'">
+        AND TITLE LIKE '%' || #{search} || '%'
+        </if>
+        <if test="boardType == 'userName'">
+     	AND USERNAME LIKE '%' || #{search} || '%'
+        </if>
 	</select>	
 	
 	 <!-- 게시판 삭제 -->
@@ -44,7 +57,9 @@
         <if test="boardType == 'userName'">
      	AND USERNAME LIKE '%' || #{search} || '%'
         </if>
-</select>
+        ORDER BY BOARDNO 
+        OFFSET #{startIndex} ROWS FETCH FIRST #{outputNumber} ROWS ONLY
+	</select>
         
         
         
@@ -71,10 +86,10 @@
 	</select>	
 	
 	<select id ="innerBoard" parameterType="hashmap" resultType="com.example.test1.model.Board">		
-	select * from TBL_BOARD B 
+	SELECT  C.USERID AS userId,C.CONTENTS AS contents  from TBL_BOARD B 
 	INNER JOIN TBL_COMMENT C ON B.BOARDNO = C.BOARDNO
-	WHERE B.BOARDNO = #{boardNo}
-	</select>	
+    WHERE B.BOARDNO = #{boardNo}
+	</select>
 	
 	
 	

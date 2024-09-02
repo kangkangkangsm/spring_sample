@@ -10,9 +10,8 @@ import com.example.test1.model.User;
 @Mapper
 public interface BoardMapper {
 	
-	//게시판 목록
-	List<Board> selectBoardList(HashMap<String, Object> map);
-	
+	//카운팅
+	int selectPaging(HashMap<String, Object> map);
 	//게시판 삭제 
 	void deleteBoard(HashMap<String, Object> map);
 	
@@ -22,6 +21,7 @@ public interface BoardMapper {
 	
 	Board viewBoard(HashMap<String, Object> map);
 	
+	List<Board> innerBoard(HashMap<String, Object> map);
 	
 	
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.test1.mapper.BoardMapper;
 import com.example.test1.model.Board;
+import com.example.test1.model.School;
 import com.example.test1.model.User;
 
 
@@ -17,10 +18,6 @@ import com.example.test1.model.User;
 public class BoardServiceImpl implements BoardService {
 	@Autowired  
 	BoardMapper boardMapper;
-	@Override
-	public List<Board> BoardList1(HashMap<String, Object> map) {
-		return boardMapper.selectBoardList(map);
-	}
 
 	@Override
 	public HashMap<String, Object> removeBoard(HashMap<String, Object> map) {
@@ -51,9 +48,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Board> boardSearch(HashMap<String, Object> map) {
-	
-		return boardMapper.searchBoardList(map);
+	public HashMap<String, Object> boardSearch(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		List<Board> list = boardMapper.searchBoardList(map);
+		int cnt = boardMapper.selectPaging(map);
+		resultMap.put("list", list);
+		resultMap.put("cnt", cnt);
+		return resultMap;
 		
 	}
 
@@ -62,7 +63,9 @@ public class BoardServiceImpl implements BoardService {
 		HashMap<String, Object> resultMap = new HashMap<>();
 		try {
 			Board Board = boardMapper.viewBoard(map);
+			List<Board> list = boardMapper.innerBoard(map);
 			resultMap.put("info", Board);
+			resultMap.put("vList", list);
 			resultMap.put("result", "success");
 			resultMap.put("message", "검색되었습니다.");
 		} catch (Exception e) {
@@ -71,6 +74,8 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return resultMap;
 	}
+
+
 
 
 

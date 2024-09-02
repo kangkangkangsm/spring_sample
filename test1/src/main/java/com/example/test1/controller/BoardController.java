@@ -45,16 +45,7 @@ public class BoardController {
         return "/board/board-view";
     }
     
-    //게시글 목록 페이지 (JSON)
-    @RequestMapping(value = "/board/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String selectBoardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-        HashMap<String, Object> resultMap = new HashMap<>();
-        List<Board> list = boardService.BoardList1(map);
-        resultMap.put("list", list);
-        resultMap.put("result", "success");
-        return new Gson().toJson(resultMap);
-    }
+ 
     
     // 게시글 삭제 (JSON)
     @RequestMapping(value = "/board/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -80,9 +71,8 @@ public class BoardController {
     @ResponseBody
     public String searchBoardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
         HashMap<String, Object> resultMap = new HashMap<>();
-        List<Board> list = boardService.boardSearch(map);
-        resultMap.put("list", list);
-        resultMap.put("result", "success");
+        resultMap = boardService.boardSearch(map);
+        
         return new Gson().toJson(resultMap);
     }
     
