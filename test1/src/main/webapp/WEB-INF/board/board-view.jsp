@@ -18,21 +18,21 @@
 			/* 테이블 셀 스타일 */
 			td {
 			    padding: 3px 2px;
-			    border: 1px solid #ddd; /* 테두리 색상 */
+			   
 			}
 
 			/* 테이블 전체 테두리 스타일 */
 			table{
 				width:100%;
 			}
-			table, th, td {
-			    border: 1px solid #ddd;
+					/* 테이블 전체 스타일 조정 */
+			th td {
+			    text-align: left;
 			}
-
-			/* 테이블 전체 스타일 조정 */
-			th, td {
-			    text-align: center;
+			th {
+				padding-right:20px;
 			}
+		
 		}
 		a strong{
 			color:red;
@@ -51,6 +51,10 @@
 		
 			<table>
 			<tr>
+				<th>ID</th>
+				<td>{{viewList.USERID}}</td>
+			</tr>
+			<tr>
 				<th>제목</th>
 				<td>{{viewList.TITLE}}</td>
 			</tr>
@@ -61,7 +65,7 @@
 			</table>
 		<button @click="fnBack()">돌아가기</button>
 		<hr>
-		[댓그르르르]
+		[댓]
 		<template v-for="item in vList">
 		<div><a><strong>{{item.USERID}} : </strong> {{item.CONTENTS}}</a></div>
 		</template>			

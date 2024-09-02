@@ -38,6 +38,15 @@
 		div li:first-child {
 		    margin-left: 0; /* 첫 번째 li 요소에는 마진을 주지 않음 */
 		}
+		button {
+	       padding: 8px 12px;
+	       border: none;
+	       border-radius: 4px;
+	       background-color: #007bff;
+	       color: #fff;
+	       cursor: pointer;
+	       margin-right: 10px;
+	   }
 		table{
 			th {
 			  
@@ -65,6 +74,13 @@
 			    text-align: center;
 			}
 		}
+		select, input[type="text"] {
+		            margin: 0 10px 10px 0;
+		            padding: 8px;
+		            border: 1px solid #ddd;
+		            border-radius: 4px;
+		            font-size: 1em;
+		        }
 		div ul li{
 			background:#007bff;
 			border-radius:5px;
@@ -181,7 +197,7 @@
 				</template>
 			</tr>
 		</table> 
-			<button @click="fnAdd()" > 글쓰기</button>			
+			<button style="margin-left:65%; margin-top:15px;"@click="fnAdd()" > 글쓰기</button>			
 			<button @click="fnMoveBoard">유저 리스트이동</button>
 			<div class="pagination">
 			    <button @click="fnSearch(currentPage - 1)" :disabled="currentPage <= 1">이전</button>
