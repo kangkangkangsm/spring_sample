@@ -43,46 +43,45 @@
 	
 	<div id="app">	
 		
-			<template v-if="viewList.userId != null">
-			<div>아이디 : {{viewList.userId}}</div>
-			<div>이름 : {{viewList.userName}}</div>
-			<div>이메일 : {{viewList.email}}</div>
-			<div>전화번호 : {{viewList.phone}}</div>
-			<div>성별 : {{viewList.gender}}</div>
+			<template v-if="BookInfo.bookId != null">
+			<div>책 No. : {{BookInfo.bookId}}</div>
+			<div>책 이름 : {{BookInfo.bookName}}</div>
+			<div>책 종류 : {{BookInfo.publisher}}</div>
+			<div>책 가격 : {{BookInfo.price}}</div>
 			</template>
 		<template v-else>
-			<div>유저 정보 없음!</div>
+			<div>책 정보 없음!</div>
 		</template>				
 		<button @click="fnBack1()">돌아가기</button>
 	</div>
 </body>
 </html>
-
 <script>
 	
 	   
     const app = Vue.createApp({
         data() {
             return {
-           		userId : '${userId}',
-				viewList : {}
+           		bookId : '${bookId}',
+				BookInfo : {}
 				
             };
         },
         methods: {
 			fnBack1() {
-			       window.history.back();
+				location.href ="/book.do"
 			},
-			fnUserView(){
+			fnBookView(){
 				var self = this;
-				var nparmap = {userId : self.userId};
+				var nparmap = {bookId : self.bookId};
 				$.ajax({
-					url:"/board/userView.dox",
+					url:"/bookView.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-					self.viewList = data.info;
+					self.BookInfo = data.BookInfo;
+					//alert(data.message);
 					}
 				});
 	        },
@@ -90,7 +89,7 @@
         },
         mounted() {
             var self = this;
-			self.fnUserView();
+			self.fnBookView();
         }
     });
     app.mount('#app');

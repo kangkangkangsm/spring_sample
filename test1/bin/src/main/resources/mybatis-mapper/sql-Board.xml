@@ -4,11 +4,24 @@
 
 <mapper namespace="com.example.test1.mapper.BoardMapper">
 		
-	<select id="selectBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">		
-								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
-		SELECT * 
-		FROM TBL_BOARD
-
+	<select id="selectPaging" parameterType="hashmap" resultType="int">		
+							<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
+		SELECT count(*) AS CNT
+		FROM TBL_BOARD B
+    	INNER JOIN TBL_USER U ON U.userId = B.userId
+    	WHERE 1=1 
+    	<if test="category != '' and category != null">
+    	AND CATEGORY = #{category}
+    	</if>  
+    	<if test="boardType == 'all'">
+   		AND (TITLE LIKE '%' || #{search} || '%' OR USERNAME LIKE '%' || #{search} || '%')      
+        </if>
+        <if test="boardType == 'title'">
+        AND TITLE LIKE '%' || #{search} || '%'
+        </if>
+        <if test="boardType == 'userName'">
+     	AND USERNAME LIKE '%' || #{search} || '%'
+        </if>
 	</select>	
 	
 	 <!-- 게시판 삭제 -->
@@ -23,16 +36,61 @@
  	<insert id="insertBoard" parameterType="hashmap">
  	
     INSERT INTO TBL_BOARD (BOARDNO, TITLE, CONTENTS, HIT, USERID, CDATETIME, UDATETIME)
-    VALUES (board_seq.NEXTVAL, #{TITLE}, #{CONTENTS}, 0, '나야나', SYSDATE, SYSDATE)
+    VALUES (board_seq.NEXTVAL, #{TITLE}, #{CONTENTS}, 0, #{userId}, SYSDATE, SYSDATE)
 	
 	</insert>
 
-	<select id="searchBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">		
+	<select id="searchBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">
+    SELECT * 
+    FROM TBL_BOARD B
+    INNER JOIN TBL_USER U ON U.userId = B.userId
+    WHERE 1=1 
+    	<if test="category != '' and category != null">
+    	AND CATEGORY = #{category}
+    	</if>  
+    	<if test="boardType == 'all'">
+   		AND (TITLE LIKE '%' || #{search} || '%' OR USERNAME LIKE '%' || #{search} || '%')      
+        </if>
+        <if test="boardType == 'title'">
+        AND TITLE LIKE '%' || #{search} || '%'
+        </if>
+        <if test="boardType == 'userName'">
+     	AND USERNAME LIKE '%' || #{search} || '%'
+        </if>
+        ORDER BY BOARDNO 
+        OFFSET #{startIndex} ROWS FETCH FIRST #{outputNumber} ROWS ONLY
+	</select>
+        
+        
+        
+        <!--        <when test="num == 0">
+        
+        </when>
+        <when test="num == 1">
+        WHERE CATEGORY = '1'
+        </when>
+         <when test="num == 2">
+        WHERE CATEGORY = '2'
+        </when>
+         <when test="num == 3">
+        WHERE CATEGORY = '3'
+        </when>
+        <when test="boardType == 'all'">-->
+	
+	<select id="viewBoard" parameterType="hashmap" resultType="com.example.test1.model.Board">		
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
 		SELECT * 
 		FROM TBL_BOARD 
-		WHERE TITLE LIKE '%' || #{search} || '%' 
+		WHERE BOARDNO = #{boardNo} 
 
 	</select>	
+	
+	<select id ="innerBoard" parameterType="hashmap" resultType="com.example.test1.model.Board">		
+	SELECT  C.USERID AS userId,C.CONTENTS AS contents  from TBL_BOARD B 
+	INNER JOIN TBL_COMMENT C ON B.BOARDNO = C.BOARDNO
+    WHERE B.BOARDNO = #{boardNo}
+	</select>
+	
+	
 	
 </mapper>

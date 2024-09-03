@@ -75,6 +75,56 @@ public class BoardServiceImpl implements BoardService {
 		return resultMap;
 	}
 
+	@Override
+	public HashMap<String, Object> chartBoard1(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		
+		try {
+			List<Board> list = boardMapper.chartBoard(map);
+			resultMap.put("chartList", list);
+			resultMap.put("result", "success");
+		
+		} catch (Exception e) {
+			resultMap.put("result", "fail");
+			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");
+		}
+		return resultMap;
+	}
+
+	@Override
+	public HashMap<String, Object> payMents(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		try {
+			boardMapper.insertPayment(map);
+			resultMap.put("result", "success");
+		} catch (Exception e) {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+
+	@Override
+	public HashMap<String, Object> Area(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		
+		try {
+			if(!map.get("si").equals("")) {
+				
+			}else {
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		List<Board> Arealist = boardMapper.selectArea(map);
+		List<Board> Gulist = boardMapper.selectAreaGu(map);
+		List<Board> Donglist = boardMapper.selectAreaDong(map);
+		resultMap.put("list", Arealist);
+		resultMap.put("gulist", Gulist);
+		resultMap.put("donglist", Donglist);
+		return resultMap;
+	}
+
 
 
 

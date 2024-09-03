@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.test1.mapper.LoanMapper">
+	
+	<!-- books 리스트 -->	
+	<select id="book" parameterType="hashmap" resultType="com.example.test1.model.Loan">
+		SELECT * 
+		FROM BOOKS
+		WHERE TITLE LIKE '%' || #{search} || '%' 
+	</select>	
+	
+	<!-- members 리스트 -->
+	<select id="member" parameterType="hashmap" resultType="com.example.test1.model.Loan">
+		SELECT * 
+		FROM MEMBERS
+		WHERE lastName LIKE '%' || #{search} || '%' OR
+		firstName LIKE '%' || #{search} || '%'
+	</select>	
+	
+	<select id="bookcheck" parameterType="hashmap" resultType="com.example.test1.model.Loan">
+		SELECT * 
+		FROM BOOKS
+		WHERE BOOKID = #{bookId}
+	</select>	
+	
+	<delete id="deleteBook" parameterType="hashmap">
+		DELETE  
+		FROM BOOKS
+		WHERE BOOKID = #{bookId}
+	</delete>	
+ 	
+	<delete id="deleteMember" parameterType="hashmap">
+		DELETE  
+		FROM MEMBERS
+		WHERE MEMBERID = #{memberId}
+	</delete>	
+	
+	<insert id="inserBook" parameterType="hashmap">
+		INSERT INTO
+		BOOKS(BOOKID, TITLE, AUTHOR, PUBLISHER, PRICE, STOCKQUANTITY)
+		VALUES(#{bookId},#{title},#{author},#{publisher},#{price},#{stockQuantity})
+	</insert>	
+	
+</mapper>

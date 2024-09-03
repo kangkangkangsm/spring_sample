@@ -5,8 +5,6 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
-	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-	
 	<title>첫번째 페이지</title>	
 	<style>
 		#container {
@@ -199,26 +197,24 @@
 				</template>
 			</tr>
 		</table> 
-			<button style="margin-left:3%; margin-top:15px;"@click="fnAdd()" > 글쓰기</button>			
+			<button style="margin-left:65%; margin-top:15px;"@click="fnAdd()" > 글쓰기</button>			
 			<button @click="fnMoveBoard">유저 리스트이동</button>
-			<button @click="requestCert()">인증하기</button>
 			<div class="pagination">
 			    <button @click="fnSearch(currentPage - 1)" :disabled="currentPage <= 1">이전</button>
 			    <button v-for="page in totalPages" :class="{active: page == currentPage}" @click="fnSearch(page)">
 			        {{ page }}
 			    </button>
 			    <button @click="fnSearch(currentPage + 1)" :disabled="currentPage >= totalPages">다음</button>
-				
 			</div>
-	
+			
 		<div>
 	</div>
 </body>
 </html>
 <script>
 	
+	   
     const app = Vue.createApp({
-		
         data() {
             return {
                 name : "홍길동",
@@ -233,21 +229,13 @@
 				currentPage: 1,      
 				pageSize: 5,        
 				totalPages: 5,
-				cnt :'',
-				
-				
+				cnt :''
             };
         },
         methods: {
-		
-			requestCert() {
-			  IMP.certification({
-			    pg: "inicis_unified.INIpayTest",
-			    merchant_uid: "test_m0lu83vo",
-			  });
-			},
+			
 			fnCategory(category){
-				var self = this;	
+				var self = this;
 				self.category = category;
 				self.fnSearch(1);		
 			},
@@ -306,9 +294,6 @@
         mounted() {
             var self = this;
 			self.fnSearch(1);
-			IMP.init("imp29272276");
-			
-			
 			
         }
     });

@@ -22,5 +22,17 @@ public class Board {
 	private String pcommentNo;
 	
 	
+	private String cname;
+	private int price;
+	private String pdate;
 	
+	//PAYMENT
+	private String merchantUid;
+	private String merchantUname;
+	
+	//AREA
+	private String si;
+	private String gu;
+	private String dong;
+
 }

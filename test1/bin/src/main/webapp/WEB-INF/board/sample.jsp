@@ -39,58 +39,26 @@
 <style>
 </style>
 <body>
-	
-	
-	<div id="app">	
+	<div id="app">
 		
-			<template v-if="viewList.userId != null">
-			<div>아이디 : {{viewList.userId}}</div>
-			<div>이름 : {{viewList.userName}}</div>
-			<div>이메일 : {{viewList.email}}</div>
-			<div>전화번호 : {{viewList.phone}}</div>
-			<div>성별 : {{viewList.gender}}</div>
-			</template>
-		<template v-else>
-			<div>유저 정보 없음!</div>
-		</template>				
-		<button @click="fnBack1()">돌아가기</button>
 	</div>
 </body>
 </html>
-
 <script>
 	
 	   
     const app = Vue.createApp({
         data() {
             return {
-           		userId : '${userId}',
-				viewList : {}
-				
+           
             };
         },
         methods: {
-			fnBack1() {
-			       window.history.back();
-			},
-			fnUserView(){
-				var self = this;
-				var nparmap = {userId : self.userId};
-				$.ajax({
-					url:"/board/userView.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-					self.viewList = data.info;
-					}
-				});
-	        },
- 
+         
         },
         mounted() {
             var self = this;
-			self.fnUserView();
+			
         }
     });
     app.mount('#app');

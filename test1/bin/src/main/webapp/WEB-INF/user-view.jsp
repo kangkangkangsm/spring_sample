@@ -53,11 +53,12 @@
 		<template v-else>
 			<div>유저 정보 없음!</div>
 		</template>				
-		<button @click="fnBack1()">돌아가기</button>
+		<button @click="fnBack1()">유저리스트 돌아가기</button>
+		<button @click="fnBack2()">게시판 돌아가기</button>
+		<button @click="fnDelete(viewList.userId)">삭제</button>
 	</div>
 </body>
 </html>
-
 <script>
 	
 	   
@@ -70,14 +71,37 @@
             };
         },
         methods: {
+			fnDelete(userId){
+					var self = this;
+					var nparmap = {userId : userId};
+					if(!confirm("삭제하실래요?")){
+						return;	
+					}
+					$.ajax({
+						url: "user-delete.dox",
+						dataType: "json",
+						type: "POST",
+						data: nparmap,
+						success: function(data) {
+						alert(data.message);
+						location.href ="user-list.do"
+						
+						
+						
+					}
+				});
+			},
 			fnBack1() {
-			       window.history.back();
+				location.href ="/user-list.do"
+			},
+			fnBack2() {
+				location.href ="/board/list.do"
 			},
 			fnUserView(){
 				var self = this;
 				var nparmap = {userId : self.userId};
 				$.ajax({
-					url:"/board/userView.dox",
+					url:"/user-view.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,

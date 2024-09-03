@@ -17,6 +17,11 @@ public interface BoardService {
 	HashMap<String, Object> boardSearch(HashMap<String, Object> map);
 	
 	HashMap<String, Object> viewSearch(HashMap<String, Object> map);
-
+	
+	HashMap<String, Object> chartBoard1(HashMap<String, Object> map);
+	
+	HashMap<String, Object> payMents(HashMap<String, Object> map);
+	
+	HashMap<String, Object> Area(HashMap<String, Object> map);
 	
 }

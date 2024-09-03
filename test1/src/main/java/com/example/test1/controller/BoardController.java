@@ -44,6 +44,19 @@ public class BoardController {
         request.setAttribute("boardNo", map.get("boardNo"));
         return "/board/board-view";
     }
+  
+    @RequestMapping("/board/chart1.do") 
+    public String main4(Model model) throws Exception{
+
+        return "/chart/chart";
+    }
+    
+    //Area
+    @RequestMapping("/board/area.do") 
+    public String Area(Model model) throws Exception{
+
+        return "/board/area";
+    }
     
  
     
@@ -84,4 +97,32 @@ public class BoardController {
         resultMap = boardService.viewSearch(map);
         return new Gson().toJson(resultMap);
     }
+    // 게시글 목록 페이지2 (JSON)
+    @RequestMapping(value = "/board/chart.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String chartBoardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap = boardService.chartBoard1(map);
+        return new Gson().toJson(resultMap);
+    }
+    
+    // 결제
+    @RequestMapping(value = "/board/payment.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String payMents(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap = boardService.payMents(map);
+        return new Gson().toJson(resultMap);
+    }
+    
+    //Area
+    @RequestMapping(value = "/board/Area.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String AreaList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap = boardService.Area(map);
+        return new Gson().toJson(resultMap);
+    }
+    
+    
 }

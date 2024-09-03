@@ -43,54 +43,74 @@
 	
 	<div id="app">	
 		
-			<template v-if="viewList.userId != null">
-			<div>아이디 : {{viewList.userId}}</div>
-			<div>이름 : {{viewList.userName}}</div>
-			<div>이메일 : {{viewList.email}}</div>
-			<div>전화번호 : {{viewList.phone}}</div>
-			<div>성별 : {{viewList.gender}}</div>
+			<template v-if="BookInfo.bookId != null">
+			<div>책 No. : {{BookInfo.bookId}}</div>
+			<div>책 이름 : {{BookInfo.title}}</div>
+			<div>저자 : {{BookInfo.author}}</div>
+			<div>출판사 : {{BookInfo.publisher}}</div>
+			<div>책 가격 : {{BookInfo.price}}</div>
+			<div>나도몰루.. : {{BookInfo.stockQuantity}}</div>
 			</template>
 		<template v-else>
-			<div>유저 정보 없음!</div>
+			<div>책 정보 없음!</div>
 		</template>				
-		<button @click="fnBack1()">돌아가기</button>
+		<button @click="fnBookDelete(BookInfo.bookId)">삭제</button>
+		<button @click="fnback()">돌아가기</button>
 	</div>
 </body>
 </html>
-
 <script>
 	
 	   
     const app = Vue.createApp({
         data() {
             return {
-           		userId : '${userId}',
-				viewList : {}
+           		bookId : '${bookId}',
+				BookInfo : {}
 				
             };
         },
         methods: {
-			fnBack1() {
-			       window.history.back();
-			},
-			fnUserView(){
+			fnback(){
+				history.back()
+			},	
+			fnBookView(){
 				var self = this;
-				var nparmap = {userId : self.userId};
+				var nparmap = {bookId : self.bookId};
 				$.ajax({
-					url:"/board/userView.dox",
+					url:"/book-check.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-					self.viewList = data.info;
+					self.BookInfo = data.list;
+					//alert(data.message);
 					}
 				});
 	        },
+			fnBookDelete(bookId) {
+				var self = this;
+				var nparmap = {bookId : bookId};
+				if(!confirm("정말 삭제하시겠습니까?")){
+					return;
+				}
+				$.ajax({
+				url: "/books-delete.dox",
+				dataType: "json",
+				type: "POST",
+				data: nparmap,
+				success: function(data) {
+					alert(data.message);
+					location.href="../Loan.do"	
+				}
+			});
+        },
+								
  
         },
         mounted() {
             var self = this;
-			self.fnUserView();
+			self.fnBookView();
         }
     });
     app.mount('#app');

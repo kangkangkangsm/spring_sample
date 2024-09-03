@@ -43,46 +43,44 @@
 	
 	<div id="app">	
 		
-			<template v-if="viewList.userId != null">
-			<div>아이디 : {{viewList.userId}}</div>
-			<div>이름 : {{viewList.userName}}</div>
-			<div>이메일 : {{viewList.email}}</div>
-			<div>전화번호 : {{viewList.phone}}</div>
-			<div>성별 : {{viewList.gender}}</div>
-			</template>
-		<template v-else>
-			<div>유저 정보 없음!</div>
-		</template>				
-		<button @click="fnBack1()">돌아가기</button>
+			
+			<div>학번 : {{viewList.stuNo}}</div>
+			<div>이름 : {{viewList.name}}</div>
+			<div>학부 : {{viewList.dDName}}</div>
+			<div>학과 : {{viewList.d2DName}}</div>
+			<div>담당 교수 : {{viewList.pName}}</div>
+			
+			<button @click="fnBack()">뒤로가기</button>
 	</div>
+	
+	
 </body>
 </html>
-
 <script>
 	
 	   
     const app = Vue.createApp({
         data() {
             return {
-           		userId : '${userId}',
+           		stuNo : '${stuNo}',
 				viewList : {}
 				
             };
         },
         methods: {
-			fnBack1() {
-			       window.history.back();
+			fnBack(){
+				history.back();
 			},
 			fnUserView(){
 				var self = this;
-				var nparmap = {userId : self.userId};
+				var nparmap = {stuNo : self.stuNo};
 				$.ajax({
-					url:"/board/userView.dox",
+					url:"studentUser-view.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-					self.viewList = data.info;
+					self.viewList = data.list;
 					}
 				});
 	        },

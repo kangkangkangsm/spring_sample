@@ -23,5 +23,13 @@ public interface BoardMapper {
 	
 	List<Board> innerBoard(HashMap<String, Object> map);
 	
+	List<Board> chartBoard(HashMap<String, Object> map);
 	
+	void insertPayment(HashMap<String, Object> map);
+	
+	List<Board> selectArea(HashMap<String, Object> map);
+	
+	List<Board> selectAreaGu(HashMap<String, Object> map);
+	
+	List<Board> selectAreaDong(HashMap<String, Object> map);
 }

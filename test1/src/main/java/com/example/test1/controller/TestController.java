@@ -24,6 +24,12 @@ public class TestController {
 	@Autowired
 	TestService TestService;
 	
+	@RequestMapping("/testPay.do") 
+    public String pay(Model model) throws Exception{
+
+        return "/test/pay";
+    }
+	
 	@RequestMapping("/testUser.do") 
     public String main(Model model) throws Exception{
 

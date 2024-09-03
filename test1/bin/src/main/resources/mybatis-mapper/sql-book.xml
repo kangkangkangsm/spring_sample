@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.test1.mapper.BookMapper">
+		
+	<select id="selectBookList" parameterType="hashmap" resultType="com.example.test1.model.Book">
+		SELECT * 
+		FROM BOOK
+		WHERE bookName LIKE '%' || #{search} || '%' 
+		ORDER BY BOOKID
+	</select>	
+	
+	<select id="bookView" parameterType="hashmap" resultType="com.example.test1.model.Book">
+		SELECT * 
+		FROM BOOK
+		WHERE BOOKID = #{bookId}
+	</select>	
+	
+	 <!-- 게시판 삭제 -->
+    <delete id="deleteBook" parameterType="hashmap">
+    
+        DELETE 
+        FROM BOOK 
+        WHERE BOOKID = #{bookId}
+    </delete>
+    <insert id="insertBook" parameterType="hashmap">
+ 	
+    INSERT INTO BOOK
+    VALUES (#{bookId}, #{bookName}, #{publisher}, #{price})
+	
+	</insert>
+	<update id="updateBook" parameterType="hashmap">
+ 	
+    UPDATE BOOK
+    SET 
+    bookName = #{bookName}, 
+    publisher = #{publisher}, 
+    price = #{price}
+	WHERE 
+	bookId = #{bookId}
+	</update>
+ 	
+	
+</mapper>
