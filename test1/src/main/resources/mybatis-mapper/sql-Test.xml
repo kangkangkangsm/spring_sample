@@ -16,4 +16,5 @@
 		VALUES (1, #{userName}, #{password}, #{email}, SYSDATE);
 	</insert>	
 	
+	
 </mapper>

@@ -29,4 +29,5 @@ public class User {
 	private String phone;
 	private String gender;
 	private String status;
+	private String addr;
 }

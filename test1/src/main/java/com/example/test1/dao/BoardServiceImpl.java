@@ -35,11 +35,13 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public HashMap<String, Object> addBoard(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<>();
-		System.out.println(map);
 		try {
 			boardMapper.insertBoard(map);
+			
+			resultMap.put("idx",map.get("boardNo"));
 			resultMap.put("result", "success.");
 			resultMap.put("message", "등록되었습니다.");
+			
 		} catch (Exception e) {
 			resultMap.put("result", "fail");
 			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");

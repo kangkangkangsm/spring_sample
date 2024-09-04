@@ -44,6 +44,10 @@
 				<td>제목</td>
 				<td><input type="text" placeholder="제목" v-model="TITLE"></td>
 			</tr>
+			<td>파일첨부</td>
+			<td><input type="file" @change="fnFileChange"/></td>
+			<tr>
+			</tr>
 			<tr>
 				<td>내용</td>
 				<td><div id="editor"></div></td>
@@ -54,6 +58,7 @@
 					<button @click="fnReset()"> 뒤로가기 </button>
 				</td>
 			</tr>
+			
 	</div>
 </body>
 </html>
@@ -65,10 +70,14 @@
             return {	
 				TITLE : "",
 				CONTENTS : "",
-				userId : '${sessionId}'
+				userId : '${sessionId}',
+				file : null
             };
         },
         methods: {
+			fnFileChange(event) {
+				this.file = event.target.files[0];
+			},
 			fnSave(){
 					var self = this;
 					var nparmap = {TITLE : self.TITLE, CONTENTS : self.CONTENTS, userId : self.userId};
@@ -78,16 +87,39 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
+					console.log(data);
 					alert(data.message);
 					
-					location.href ="/board/list.do"
+					var idx = data.idx;
+					console.log(idx);
+					console.log(self.file);					
 					
-											}
-										});
-						            },
+					if (self.file) {
+						  const formData = new FormData();
+						  formData.append('file1', self.file);
+						  formData.append('idx', idx);
+	
+						  $.ajax({
+								url: '/fileUpload.dox',
+								type: 'POST',
+								data: formData,
+								processData: false,  
+								contentType: false,  
+								success: function() {
+								  console.log('업로드 성공!');
+								},
+								error: function(jqXHR, textStatus, errorThrown) {
+								  console.error('업로드 실패!', textStatus, errorThrown);
+								}
+						  });		
+					  }			
+					}
+				});
+            },
 			fnReset(){
 					location.href ="/board/list.do"
 			},
+			
         },
 		mounted() {
 		        // Quill 에디터 초기화

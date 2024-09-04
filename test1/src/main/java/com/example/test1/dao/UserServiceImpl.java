@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 		System.out.println("service>>>>>>>>>>>>" + map);
 		try {
 			UserMapper.join(map);
-			resultMap.put("message", "회원가입 완료, 로그인페이지로 이동합니다.");
+			resultMap.put("message", "회원가입 완료!");
 			resultMap.put("result", "success");
 		} catch (Exception e) {
 			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");

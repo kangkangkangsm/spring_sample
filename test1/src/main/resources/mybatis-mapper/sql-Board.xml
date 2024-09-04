@@ -33,7 +33,7 @@
     
     </delete>
     
- 	<insert id="insertBoard" parameterType="hashmap">
+ 	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyProperty="boardNo" keyColumn="boardNo">
  	
     INSERT INTO TBL_BOARD (BOARDNO, TITLE, CONTENTS, HIT, USERID, CDATETIME, UDATETIME)
     VALUES (board_seq.NEXTVAL, #{TITLE}, #{CONTENTS}, 0, #{userId}, SYSDATE, SYSDATE)
@@ -127,7 +127,7 @@
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
 		SELECT DONG
 		FROM TBL_AREA
-		WHERE GU = #{gu}
+		WHERE GU = #{gu} AND SI =#{si}
 		GROUP BY SI, GU, DONG
 
 	</select>

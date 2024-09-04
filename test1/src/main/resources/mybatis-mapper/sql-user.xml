@@ -7,7 +7,7 @@
     <insert id="join" parameterType="hashmap">
  	
     INSERT INTO TBL_USER
-    VALUES (#{userId}, #{pwd}, #{userName}, #{email}, #{phone}, #{gender}, 'C')
+    VALUES (#{userId}, #{pwd}, '더조은', 'akfnz1232@naver.com', #{phone}, 'F', 'C',#{addr})
 	
 	</insert>
 
