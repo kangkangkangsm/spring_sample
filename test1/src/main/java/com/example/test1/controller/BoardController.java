@@ -157,21 +157,24 @@ public class BoardController {
                 multi.transferTo(file);
                 
                 HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("filename", saveFileName);
-                map.put("path", "../img/" + saveFileName);
+                map.put("fileName", saveFileName);
+                map.put("filePath", "../../img/" + saveFileName);
                 map.put("idx", idx);
-                
+                map.put("fileOrgName", originFilename);
+                map.put("fileSize", size);
+                map.put("fileExt", extName);
                 // insert 쿼리 실행         
+                boardService.addBoardFile(map);
                 
                 model.addAttribute("filename", multi.getOriginalFilename());
                 model.addAttribute("uploadPath", file.getAbsolutePath());
                 
-                return "redirect:list.do";
+                return "redirect:/board/list.do";
             }
         }catch(Exception e) {
             System.out.println(e);
         }
-        return "redirect:list.do";
+        return "redirect:/board/list.do";
     }
     
     // 현재 시간을 기준으로 파일 이름 생성

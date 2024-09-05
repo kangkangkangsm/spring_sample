@@ -23,5 +23,7 @@ public interface BoardService {
 	HashMap<String, Object> payMents(HashMap<String, Object> map);
 	
 	HashMap<String, Object> Area(HashMap<String, Object> map);
+	//파일업로드
+	HashMap<String, Object> addBoardFile(HashMap<String, Object> map);
 	
 }

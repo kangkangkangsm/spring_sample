@@ -34,5 +34,13 @@ public class Board {
 	private String si;
 	private String gu;
 	private String dong;
-
+	
+	//TBL_BOADRFILE
+	private String idx;
+	private String fileName;
+	private String fileOrgName;
+	private String filePath;
+	private String fileSize;
+	private String fileExt;
+	private String thumbnailYN;
 }

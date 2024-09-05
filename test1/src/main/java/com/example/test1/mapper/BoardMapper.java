@@ -32,4 +32,9 @@ public interface BoardMapper {
 	List<Board> selectAreaGu(HashMap<String, Object> map);
 	
 	List<Board> selectAreaDong(HashMap<String, Object> map);
+	
+	void insertBoardFile(HashMap<String, Object> map);
+	
+	Board selectImg (HashMap<String, Object> map);
+	
 }

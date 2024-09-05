@@ -22,6 +22,7 @@
         <if test="boardType == 'userName'">
      	AND USERNAME LIKE '%' || #{search} || '%'
         </if>
+        ORDER BY CDATETIME DESC
 	</select>	
 	
 	 <!-- 게시판 삭제 -->
@@ -57,7 +58,7 @@
         <if test="boardType == 'userName'">
      	AND USERNAME LIKE '%' || #{search} || '%'
         </if>
-        ORDER BY BOARDNO 
+     	ORDER BY CDATETIME DESC
         OFFSET #{startIndex} ROWS FETCH FIRST #{outputNumber} ROWS ONLY
 	</select>
         
@@ -123,12 +124,26 @@
 
 	</select>
 	
-		<select id="selectAreaDong" parameterType="hashmap" resultType="com.example.test1.model.Board">		
+	<select id="selectAreaDong" parameterType="hashmap" resultType="com.example.test1.model.Board">		
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
 		SELECT DONG
 		FROM TBL_AREA
 		WHERE GU = #{gu} AND SI =#{si}
 		GROUP BY SI, GU, DONG
 
+	</select>
+	
+	<insert id="insertBoardFile" parameterType="hashmap" >
+		
+		INSERT INTO TBL_BOADRFILE 
+		VALUES(BOARDFILE_SEQ.NEXTVAL, #{idx},#{fileName},#{fileOrgName},#{filePath},#{fileSize},#{fileExt},'N')
+		
+	</insert>
+	<select id="selectImg" parameterType="hashmap" resultType="com.example.test1.model.Board">		
+	
+	SELECT * FROM TBL_BOARD B
+	INNER JOIN TBL_BOADRFILE T ON B.BOARDNO = T.BOARDNO
+	WHERE T.BOARDNO = #{boardNo}
+	
 	</select>
 </mapper>

@@ -62,16 +62,19 @@
 				<th>내용</th>
 				<td><div v-html = "viewList.CONTENTS"></div></td>
 			</tr>	
+			<tr>
+				<td colspan="2"><img style="width:200px; height:200px;" :src="image.filePath"></td>
+			</tr>
 			</table>
 		<button @click="fnBack()">돌아가기</button>
+		<template v-if="viewList.USERID == sessionId || sessionStatus == 'A'">
+		<button @click="fnRemove(viewList.boardNo)">삭제</button>
+		</template>
 		<hr>
 		[댓]
 		<template v-for="item in vList">
 		<div><a><strong>{{item.USERID}} : </strong> {{item.CONTENTS}}</a></div>
 		</template>			
-		<template v-if="viewList.USERID == sessionId || sessionStatus == 'A'">
-		<button @click="fnRemove(viewList.boardNo)">삭제</button>
-		</template>
 	</div>
 </body>
 </html>
@@ -85,7 +88,8 @@
 				viewList : {},
 				sessionId : '${sessionId}',
 				sessionStatus : '${sessionStatus}',
-				vList : []
+				vList : [],
+				image:{}
 				
             };
         },
@@ -119,6 +123,7 @@
 						console.log(data);
 					self.viewList = data.info;
 					self.vList = data.vList;
+					self.image = data.image;
 					}
 				});
 	        },

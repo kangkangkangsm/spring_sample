@@ -89,7 +89,6 @@
 					success : function(data) { 
 					console.log(data);
 					alert(data.message);
-					
 					var idx = data.idx;
 					console.log(idx);
 					console.log(self.file);					
@@ -107,12 +106,15 @@
 								contentType: false,  
 								success: function() {
 								  console.log('업로드 성공!');
+								  location.href="/board/list.do"
 								},
 								error: function(jqXHR, textStatus, errorThrown) {
 								  console.error('업로드 실패!', textStatus, errorThrown);
 								}
 						  });		
-					  }			
+					  }	else{
+						location.href="/board/list.do"
+					  }		
 					}
 				});
             },
