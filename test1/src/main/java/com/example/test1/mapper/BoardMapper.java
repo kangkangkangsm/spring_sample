@@ -37,4 +37,6 @@ public interface BoardMapper {
 	
 	Board selectImg (HashMap<String, Object> map);
 	
+	void deleteCheckBoard (HashMap<String, Object> map);
+	
 }

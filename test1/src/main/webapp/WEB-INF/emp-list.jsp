@@ -40,8 +40,12 @@
 </style>
 <body>
 	<div id="app">
+		<input type="checkbox" v-model="selectItem" :value="10">ACOUNTIING
+		<input type="checkbox" v-model="selectItem" :value="20">RESEARCH
+		<input type="checkbox" v-model="selectItem" :value="30">SALES
+		<input type="checkbox" v-model="selectItem" :value="40">OPERATIONS
 		<table>
-			<tr> 
+			<tr>
 				<th>사번</th>
 				<th>이름</th>
 				<th>직업</th>
@@ -62,6 +66,9 @@
 				<td>{{item.DEPTNO}}</td>
 			</tr>
 		</table>
+		
+		
+		
 	</div>
 </body>
 </html>
@@ -70,10 +77,13 @@
         data() {
             return {
                 name : "홍길동",
-				empList : []
+				empList : [],
+				cha : '1',
+				selectItem : []
             };
         },
         methods: {
+			
             fnGetList(){
 				var self = this;
 				var nparmap = {};
@@ -88,7 +98,21 @@
 					}
 				});
             },
-        },
+			fnCheckRemove(){
+							var self = this;
+							var fList = JSON.stringify(self.selectItem);
+							var nparmap = {selectItem : fList};
+							$.ajax({
+								url:"/check-remove.dox",
+								dataType:"json",	
+								type : "POST", 
+								data : nparmap,
+								success : function(data) { 
+								self.fnSearch(1);
+								}
+							});
+			            },
+			},
         mounted() {
             var self = this;
 			self.fnGetList();

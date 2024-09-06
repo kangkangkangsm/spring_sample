@@ -31,6 +31,7 @@ public class BookController {
         return "/book/book-list";
     }
 	
+	
 	@RequestMapping("/list.do") 
     public String main2(Model model) throws Exception{
 

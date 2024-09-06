@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.test1.mapper.StudentMapper;
+import com.example.test1.model.Board;
 import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
 import com.example.test1.model.Subject;
@@ -64,6 +65,15 @@ public class StudentServiceImpl implements StudentService{
 		return resultMap;
 	}
 
+	@Override
+	public HashMap<String, Object> empCheckList(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		List<Emp> list = studentMapper.empCheck(map);
+		resultMap.put("list", list);
+		return resultMap;
+	}
+	
+	
 	
 	//db 호출 데이터, 결과(성공,실패), 메시지(성공메시지, 오류메시지) 
 

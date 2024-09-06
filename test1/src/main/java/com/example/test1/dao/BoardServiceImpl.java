@@ -135,6 +135,12 @@ public class BoardServiceImpl implements BoardService {
 		return null;
 	}
 
+	@Override
+	public HashMap<String, Object> removeCheckBoard(HashMap<String, Object> map) {
+		boardMapper.deleteCheckBoard(map);
+		return null;
+	}
+
 
 
 

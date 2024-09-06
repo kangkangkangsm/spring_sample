@@ -1,5 +1,7 @@
 package com.example.test1.model;
 
+import java.util.HashMap;
+
 import lombok.Data;
 
 @Data

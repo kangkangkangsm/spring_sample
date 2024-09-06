@@ -41,7 +41,23 @@ public class LoanController {
         return "/Loan/book-view";
     }
 	
+	@RequestMapping("/StudyList.do") 
+    public String p1(Model model) throws Exception{
+
+        return "/projectT/studyGroupList";
+    }
+	@RequestMapping("/StudyCreate.do") 
+    public String p2(Model model) throws Exception{
+
+        return "/projectT/studyGroupCreate";
+    }
+	@RequestMapping("/StudyView.do") 
+    public String p3(Model model) throws Exception{
+
+        return "/projectT/studyGroupView";
+    }
 	
+
 	
 	//책 목록 페이지
 	@RequestMapping(value = "/members-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

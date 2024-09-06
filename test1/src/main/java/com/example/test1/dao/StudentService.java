@@ -25,7 +25,7 @@ public interface StudentService {
 	
 	List<Emp> empList(HashMap<String, Object> map);
 	
-	
+	HashMap<String, Object> empCheckList(HashMap<String, Object> map);
 	
 	HashMap<String, Object> searchSubject();
 }

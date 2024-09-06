@@ -163,6 +163,7 @@
 			
 		<table>
 			<tr> 
+				<th></th>
 				<th>번호</th>
 				<th>제목</th>
 				<th>작성자</th>
@@ -173,6 +174,7 @@
 				
 			</tr>
 			<tr v-for = "item in searchList">
+				<td><input type="checkbox" v-model="selectItem" :value="item.boardNo"></td>
 				<td>{{item.boardNo}}</td>
 				<td><a href="#" @click="fnView(item.boardNo)">{{item.TITLE}}</a></td>
 				<td><a href="#" @click="fnUserView(item.USERID)">{{item.userName}}</a></td>
@@ -199,6 +201,7 @@
 				</template>
 			</tr>
 		</table> 
+		<button @click="fnCheckRemove">선택 삭제</button>
 			<button style="margin-left:3%; margin-top:15px;"@click="fnAdd()" > 글쓰기</button>			
 			<button @click="fnMoveBoard">유저 리스트이동</button>
 			<button @click="requestCert()">인증하기</button>
@@ -234,6 +237,7 @@
 				pageSize: 5,        
 				totalPages: 5,
 				cnt :'',
+				selectItem : []
 				
 				
             };
@@ -302,6 +306,22 @@
 			fnMoveBoard(){
 				location.href ="/user-list.do"
 			},	
+			fnCheckRemove(){
+				var self = this;
+				// js
+				var fList = JSON.stringify(self.selectItem);
+				var nparmap = {selectItem : fList};
+				$.ajax({
+					url:"/check-remove.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+					self.fnSearch(1);
+					}
+				});
+            },
+			
 			},
         mounted() {
             var self = this;

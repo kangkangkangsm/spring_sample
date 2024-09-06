@@ -23,6 +23,7 @@ public interface StudentMapper {
 	
 	List<Student> subject();
 	
+	List<Emp>empCheck(HashMap<String, Object> map);
 	
 	
 	// 삭제나 수정은 void로 해도됌 

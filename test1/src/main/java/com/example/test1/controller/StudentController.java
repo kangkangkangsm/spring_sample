@@ -15,6 +15,8 @@ import com.example.test1.dao.StudentService;
 import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
 import com.example.test1.model.Subject;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 @Controller
@@ -117,6 +119,18 @@ public class StudentController {
 
 			    return new Gson().toJson(responseMap);
 		}
+		
+		@RequestMapping(value = "/emplist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String emp2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			 String json = map.get("selectItem").toString(); 
+		        ObjectMapper mapper = new ObjectMapper();
+		        List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		        map.put("list", list);
+		
+		return new Gson().toJson(resultMap);
+	}
+		
 		
 }
 
