@@ -21,117 +21,118 @@ import com.google.gson.Gson;
 
 @Controller
 public class StudentController {
-	
-	@Autowired
-	StudentService studentService;
-	
-	@RequestMapping("/student.do") 
+   
+   @Autowired
+   StudentService studentService;
+   
+   @RequestMapping("/student.do") 
     public String main(Model model) throws Exception{
 
         return "/student-list";
     }
-	
-	@RequestMapping("/test.do") 
+   
+   @RequestMapping("/test.do") 
     public String main1(Model model) throws Exception{
-		
+      
         return "/test";  
     }
-	
-	@RequestMapping("/abc.do") 
+   
+   @RequestMapping("/abc.do") 
     public String main2(Model model) throws Exception{
-		
+      
         return "/abc";  
     }
-	
-	@RequestMapping("/emp.do") 
+   
+   @RequestMapping("/emp.do") 
     public String main3(Model model) throws Exception{
-		
+      
         return "/emp-list";  
     }
-	
-	@RequestMapping("/subject.do") 
+   
+   @RequestMapping("/subject.do") 
     public String main4(Model model) throws Exception{
-		
+      
         return "/subject-list";  
     }
-	
+   
 
-	@RequestMapping(value = "/ok.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String qwer(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		Student stu = studentService.searchQwer();
-		resultMap.put("stu", stu);
-		resultMap.put("result", "success");
-		
-		// {stu : {stuNo:12345637,stuName:옥한빛..}, result : success}....
-		return new Gson().toJson(resultMap);
-	}
-	
-	@RequestMapping(value = "/abc.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String abcd(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-	
-		
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Student> a = studentService.searchabcd(map);
-		resultMap.put("info", a);
-		resultMap.put("result", "success");
-		
-		// {stu : {stuNo:12345637,stuName:옥한빛..}, result : success}....
-		return new Gson().toJson(resultMap);
-	}
-	
-	@RequestMapping(value = "/deptInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String same(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Student> list = studentService.sameStudentList(map);
-		resultMap.put("samelist", list);
-		resultMap.put("result", "success");
-		return new Gson().toJson(resultMap);
-	}
-	
-		@RequestMapping(value = "/emplist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		@ResponseBody
-		public String emp(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-			HashMap<String, Object> resultMap = new HashMap<String, Object>();
-			List<Emp> list = studentService.empList(map);
-			resultMap.put("list", list);
-		resultMap.put("result", "success");
-		return new Gson().toJson(resultMap);
-	}
-		
+   @RequestMapping(value = "/ok.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+   @ResponseBody
+   public String qwer(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+      HashMap<String, Object> resultMap = new HashMap<String, Object>();
+      Student stu = studentService.searchQwer();
+      resultMap.put("stu", stu);
+      resultMap.put("result", "success");
+      
+      // {stu : {stuNo:12345637,stuName:옥한빛..}, result : success}....
+      return new Gson().toJson(resultMap);
+   }
+   
+   @RequestMapping(value = "/abc.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+   @ResponseBody
+   public String abcd(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+   
+      
+      HashMap<String, Object> resultMap = new HashMap<String, Object>();
+      List<Student> a = studentService.searchabcd(map);
+      resultMap.put("info", a);
+      resultMap.put("result", "success");
+      
+      // {stu : {stuNo:12345637,stuName:옥한빛..}, result : success}....
+      return new Gson().toJson(resultMap);
+   }
+   
+   @RequestMapping(value = "/deptInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+   @ResponseBody
+   public String same(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+      HashMap<String, Object> resultMap = new HashMap<String, Object>();
+      List<Student> list = studentService.sameStudentList(map);
+      resultMap.put("samelist", list);
+      resultMap.put("result", "success");
+      return new Gson().toJson(resultMap);
+   }
+   
+      @RequestMapping(value = "/emplist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+      @ResponseBody
+      public String emp(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+         HashMap<String, Object> resultMap = new HashMap<String, Object>();
+         List<Emp> list = studentService.empList(map);
+         resultMap.put("list", list);
+      resultMap.put("result", "success");
+      return new Gson().toJson(resultMap);
+   }
+      
 
-		@RequestMapping(value = "/sub-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		@ResponseBody
-		public String subject() throws Exception {
-		    // studentService의 searchSubject() 메소드를 호출하여 데이터 가져오기
-		    HashMap<String, Object> resultMap = studentService.searchSubject();
-		    
-		    List<Student> subList = (List<Student>) resultMap.get("subList");
-		    List<Student> stuList = (List<Student>) resultMap.get("stuList");
+      @RequestMapping(value = "/sub-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+      @ResponseBody
+      public String subject() throws Exception {
+          // studentService의 searchSubject() 메소드를 호출하여 데이터 가져오기
+          HashMap<String, Object> resultMap = studentService.searchSubject();
+          
+          List<Student> subList = (List<Student>) resultMap.get("subList");
+          List<Student> stuList = (List<Student>) resultMap.get("stuList");
 
-		    HashMap<String, Object> responseMap = new HashMap<>();
-		    responseMap.put("subList", subList);
-		    responseMap.put("stuList", stuList);
-		    responseMap.put("result", "success");
+          HashMap<String, Object> responseMap = new HashMap<>();
+          responseMap.put("subList", subList);
+          responseMap.put("stuList", stuList);
+          responseMap.put("result", "success");
 
-			    return new Gson().toJson(responseMap);
-		}
-		
-		@RequestMapping(value = "/emplist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		@ResponseBody
-		public String emp2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-			 String json = map.get("selectItem").toString(); 
-		        ObjectMapper mapper = new ObjectMapper();
-		        List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
-		        map.put("list", list);
-		
-		return new Gson().toJson(resultMap);
-	}
-		
-		
+             return new Gson().toJson(responseMap);
+      }
+      
+      @RequestMapping(value = "/checkEmplist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+      @ResponseBody
+      public String emp2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+         String json = map.get("selectItem").toString(); 
+              ObjectMapper mapper = new ObjectMapper();
+              List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+              map.put("list", list);
+              HashMap<String, Object> resultMap = new HashMap<String, Object>();
+              resultMap = studentService.empCheckList(map);
+      return new Gson().toJson(resultMap);
+   }
+      
+      
 }
 
 
