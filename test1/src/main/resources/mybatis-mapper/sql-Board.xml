@@ -42,9 +42,24 @@
 	</insert>
 
 	<select id="searchBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">
-    SELECT * 
+  
+    SELECT B.*,C2.*,U.*,
+    CASE 
+    WHEN TO_CHAR(CDATETIME, 'YYYY-MM-DD') = 
+    TO_CHAR(SYSDATE, 'YYYY-MM-DD') THEN TO_CHAR(CDATETIME, 'HH24:MI:SS')
+    ELSE TO_CHAR(CDATETIME, 'YYYY-MM-DD')
+    END AS CDATETIME2
     FROM TBL_BOARD B
     INNER JOIN TBL_USER U ON U.userId = B.userId
+    LEFT JOIN(
+	SELECT B.BOARDNO,B1.CNT
+    FROM TBL_BOARD B
+    INNER JOIN (
+        SELECT BOARDNO, COUNT(*) AS CNT
+        FROM TBL_COMMENT
+        GROUP BY BOARDNO
+    ) B1 ON B.BOARDNO = B1.BOARDNO) C2 
+    ON B.BOARDNO = C2.BOARDNO
     WHERE 1=1 
     	<if test="category != '' and category != null">
     	AND CATEGORY = #{category}
@@ -109,7 +124,7 @@
 	
 	<select id="selectArea" parameterType="hashmap" resultType="com.example.test1.model.Board">		
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
-		SELECT SI FROM TBL_AREA 
+		SELECT SI FROM AREA 
 		GROUP BY SI 
 		ORDER BY SI
 
@@ -118,8 +133,9 @@
 	<select id="selectAreaGu" parameterType="hashmap" resultType="com.example.test1.model.Board">		
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
 		SELECT GU
-		FROM TBL_AREA
+		FROM AREA
 		WHERE SI = #{si}
+		  AND GU IS NOT NULL
 		GROUP BY SI, GU
 
 	</select>
@@ -127,10 +143,16 @@
 	<select id="selectAreaDong" parameterType="hashmap" resultType="com.example.test1.model.Board">		
 								<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
 		SELECT DONG
-		FROM TBL_AREA
+		FROM AREA
 		WHERE GU = #{gu} AND SI =#{si}
+		 AND DONG IS NOT NULL
 		GROUP BY SI, GU, DONG
 
+	</select>
+	
+	<select id="selectNxNy" parameterType="hashmap" resultType="com.example.test1.model.Board">		
+	SELECT * FROM AREA
+	WHERE SI =#{si} AND GU =#{gu} AND DONG =#{dong}
 	</select>
 	
 	<insert id="insertBoardFile" parameterType="hashmap" >
@@ -154,4 +176,19 @@
     <foreach collection="list" item="item" open="(" close=")" separator=","> #{item}</foreach>
      
     </delete>
+    
+    <select id="selectItem" parameterType="hashmap" resultType="com.example.test1.model.Board">		
+    SELECT * FROM TBL_CODE C
+	INNER JOIN TBL_ITEM I ON I.CATEGORY1 = C.CODE
+	</select>	
+	<select id="ItemCheck" parameterType="hashmap" resultType="com.example.test1.model.Board">
+									<!--com.example.test1 <- 프로젝트명 / model 밑에 student-->
+	SELECT * FROM TBL_CODE C
+	INNER JOIN TBL_ITEM I ON I.CATEGORY1 = C.CODE
+	WHERE CODE IN
+	<foreach collection="list" item="item" open="(" close=")" separator=","> #{item}</foreach>
+	</select>	
+	
+	
+	
 </mapper>

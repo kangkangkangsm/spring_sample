@@ -28,4 +28,7 @@ public interface BoardService {
 	
 	HashMap<String, Object> removeCheckBoard(HashMap<String, Object> map);
 	
+	HashMap<String, Object> selectItem(HashMap<String, Object> map);
+
+	HashMap<String, Object> ItemCheck(HashMap<String, Object> map);
 }

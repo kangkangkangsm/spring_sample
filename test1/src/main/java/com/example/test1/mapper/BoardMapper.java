@@ -39,4 +39,11 @@ public interface BoardMapper {
 	
 	void deleteCheckBoard (HashMap<String, Object> map);
 	
+	List<Board> selectItem(HashMap<String, Object> map);
+	
+	List<Board> ItemCheck(HashMap<String, Object> map);
+	
+	Board selectNxNy(HashMap<String, Object> map);
+	
+	
 }

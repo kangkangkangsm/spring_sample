@@ -15,10 +15,7 @@
 				    color: #333;
 				}
 
-				h1 {
-				    text-align: center;
-				    color: #4CAF50;
-				}
+	
 
 				#app {
 				    max-width: 800px;
@@ -29,30 +26,9 @@
 				    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 				}
 
-				input[type="text"] {
-				    width: calc(78% - 82px);
-				    padding: 10px;
-				    margin-right: 10px;
-				    border: 1px solid #ccc;
-				    border-radius: 4px;
-				    box-sizing: border-box;
-				}
+				
 
-				button {
-				    padding: 10px 3px;
-					margin-right:10px;
-					width:80px;
-				    border: none;
-				    background-color: #4CAF50;
-				    color: white;
-				    cursor: pointer;
-				    border-radius: 4px;
-				    transition: background-color 0.3s ease;
-				}
-
-				button:hover {
-				    background-color: #45a049;
-				}
+			
 
 				hr {
 				    margin: 20px 0;
@@ -89,7 +65,7 @@
 		</head>
 		<body>
 			<div id="app">
-				<h1>책 검색 페이지</h1>
+				<h1>주말과제</h1>
 				<div>
 					책 이름 : <input type="text" placeholder="책이름" v-model="search" @keyup.enter="fnSearch()">
 					<button @click="fnSearch()"> 검색 </button>
@@ -103,75 +79,106 @@
 						<th>분야</th>
 						<th>가격</th>
 						<th>삭제</th>
-					
+						<th>수정</th>
 					</tr>
-					<tr v-for="item in booklist">
-			             <td><a href="#" @click="fnView(item.bookId)">{{ item.bookId }}</a></td>
-						 <td>{{ item.bookName }}</td>
-						 <td>{{ item.publisher }}</td>
-			             <td>{{ item.price }}</td>
-			             <td><button @click="fnRemove(item.bookId)">삭제</button></td>
-					</tr>
+					<template v-if="updateMode == '1'">
+						<tr v-for="item in booklist">
+						     <td><a href="#" @click="fnView(item.bookId)">{{ item.bookId }}</a></td>
+							 <td>{{ item.bookName }}</td>
+							 <td>{{ item.publisher }}</td>
+						     <td>{{ item.price }}</td>
+						     <td><button @click="fnRemove(item.bookId)">삭제</button></td>
+							 <td><button @click="fnUpdate()">수정</button></td> 
+						</tr>
+					</template>
+					<template v-if="updateMode == '2'">
+						<tr v-for="item in booklist">
+						     <td><a href="#" @click="fnView(item.bookId)">{{ item.bookId }}</a></td>
+							 <td><input type="text" v-model="item.bookName"></td>
+							 <td><input type="text" v-model="item.publisher"></td>
+						     <td><input type="text" v-model="item.price"></td>
+						     <td><button @click="fnRemove(item.bookId)">삭제</button></td>
+							 <td><button @click="fnSave(item)">저장</button></td> 
+						</tr>
+					</template>
 				</table>
-				<button @click="fnAdd()" > 글쓰기 </button>
+				<button @click="fnAdd()"> 글쓰기 </button>
 			</div>
 		</body>
 		</html>
+
 		<script>
-		    const app = Vue.createApp({
-		        data() {
-		            return {
-		                name: "홍길동",
-						booklist: [],
-						search: ""
-						
-		            };
+		const app = Vue.createApp({
+		    data() {
+		        return {
+		            name: "홍길동",
+					booklist: [],
+					search: "",
+					updateMode: '1'
+		        };
+		    },
+		    methods: {
+				fnView(bookId) {
+					$.pageChange("/bookView.do", {bookId : bookId});
+				},
+		        fnSearch() {
+					var self = this;
+					var nparmap = {search : self.search};
+					$.ajax({
+						url: "list.dox",
+						dataType: "json",
+						type: "POST",
+						data: nparmap,
+						success: function(data) {
+							console.log(data);
+							self.booklist = data.list;
+						}
+					});
 		        },
-		        methods: {
-					fnView(bookId){
-							$.pageChange("/bookView.do",{bookId : bookId});
-							},
-		            fnSearch() {
-							var self = this;
-							var nparmap = {search : self.search};
-							$.ajax({
-							url: "list.dox",
-							dataType: "json",
-							type: "POST",
-							data: nparmap,
-							success: function(data) {
-								console.log(data);
-								self.booklist = data.list;
-							}
-						});
-		            },
-					fnRemove(bookId){
-							var self = this;
-							var nparmap = {bookId : bookId};
-							$.ajax({
-							url: "remove.dox",
-							dataType:"json",	
-							type : "POST", 
-							data : nparmap,
-							success : function(data) { 
+				fnRemove(bookId) {
+					var self = this;
+					var nparmap = {bookId : bookId};
+					$.ajax({
+						url: "remove.dox",
+						dataType: "json",	
+						type: "POST", 
+						data: nparmap,
+						success: function(data) { 
 							alert(data.message);
 							self.fnSearch();
-								}
-						});
-				    },					
-					fnReset() {
-							this.search = ""; // 검색어 초기화
-							this.fnSearch(); // 초기화 후 다시 검색 (전체 리스트를 불러옴)
-					},
-					fnAdd(){
-						    location.href ="list.do"
-					},
-					
-		        },
-		        mounted() {
-		            var self = this;
-					self.fnSearch();
-		        }
-		    });
-		    app.mount('#app');
+						}
+					});
+			    },					
+				fnReset() {
+					this.search = ""; // 검색어 초기화
+					this.fnSearch(); // 초기화 후 다시 검색 (전체 리스트를 불러옴)
+				},
+				fnAdd() {
+				    location.href = "list.do";
+				},
+				fnUpdate() { // 수정 모드로 변경하는 함수
+					this.updateMode = '2';
+				},
+				fnSave(item) { // 수정된 내용을 저장하는 함수
+					var self = this;
+					var nparmap = {bookId: item.bookId, bookName: item.bookName, publisher: item.publisher, price: item.price};
+					$.ajax({
+						url: "update.dox",
+						dataType: "json",	
+						type: "POST", 
+						data: nparmap,
+						success: function(data) { 
+							alert(data.message);
+							self.updateMode = '1';
+							self.fnSearch();
+						}
+					});
+				}
+		    },
+		    mounted() {
+		        var self = this;
+				self.fnSearch();
+		    }
+		});
+		app.mount('#app');
 		</script>

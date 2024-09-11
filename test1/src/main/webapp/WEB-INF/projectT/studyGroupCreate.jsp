@@ -5,158 +5,183 @@
 <head>
     <meta charset="UTF-8">
     <jsp:include page="/layout/menu.jsp"></jsp:include>
-    <title>그룹 스터디 만들기</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
+	   <title>그룹 스터디 만들기</title>
+		<link rel="stylesheet" href="style.css">
+		<style>
+		    body {
+		        font-family: Arial, sans-serif;
+		        background-color: #f4f4f4;
+		        margin: 0;
+		        padding: 0;
+		        display: flex;
+		        justify-content: center;
+		        align-items: center;
+		        height: 100vh;
+		    }
+		    .form-container {
+		        width: 400px;
+		        background-color: #fff;
+		        padding: 30px;
+		        border-radius: 10px;
+		        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		    }
+		    .form-container h2 {
+		        text-align: center;
+		        margin-bottom: 20px;
+		        color: #333;
+		    }
+		    .form-group {
+		        margin-bottom: 15px;
+		    }
+		    .form-group label {
+		        display: block;
+		        margin-bottom: 5px;
+		        color: #555;
+		    }
+		    .form-group input[type="text"],
+		    .form-group input[type="password"],
+		    .form-group input[type="date"],
+		    .form-group input[type="time"],
+		    .form-group select {
+		        width: calc(100% - 20px);
+		        padding: 10px;
+		        border: 1px solid #ddd;
+		        border-radius: 5px;
+		        font-size: 14px;
+		    }
+		    .form-group input[type="radio"] {
+		        margin-right: 10px;
+		    }
+		    .form-group .inline-radio {
+		        display: flex;
+		        align-items: center;
+		    }
+		    .form-group .book-list {
+		        display: flex;
+		        align-items: center;
+		        margin-top: 10px;
+		    }
+		    .form-group .book-list select,
+		    .form-group .book-list input[type="text"] {
+		        margin-right: 10px;
+		        flex-grow: 1;
+		    }
+		    .add-book-btn {
+		        background-color: #007bff;
+		        color: #fff;
+		        border: none;
+		        padding: 8px 12px;
+		        border-radius: 5px;
+		        cursor: pointer;
+		    }
+		    .add-book-btn:hover {
+		        background-color: #0056b3;
+		    }
+		    .submit-btn {
+		        width: 100%;
+		        padding: 12px;
+		        background-color: #ff6700;
+		        color: #fff;
+		        border: none;
+		        border-radius: 5px;
+		        cursor: pointer;
+		        font-size: 16px;
+		        margin-top: 20px;
+		    }
+		    .submit-btn:hover {
+		        background-color: #e55c00;
+		    }
+		    .note {
+		        color: #888;
+		        font-size: 12px;
+		        margin-left: 10px;
+		    }
+		</style>
+	</head>
 
-        .container {
-            width: 30%;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        section {
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
-        ul, ol {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .button {
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .button:last-child {
-            margin-right: 0;
-        }
-
-        .button button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        #join-button {
-            background-color: #ff8000;
-            color: white;
-        }
-
-        #join-button:hover {
-            background-color: #0056b3;
-        }
-
-        #share-button {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        #share-button:hover {
-            background-color: #45a049;
-        }
-
-        #back-button {
-            background-color: #007bff;
-            color: white;
-        }
-
-        #back-button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-    <script>
-        function copyUrl() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('복사되었습니다 공유하십시오~');
-            });
-        }
-
-        function goBack() {
-            window.history.back();
-        }
-    </script>
-</head>
-<body>
-    <div id="app">
-        <div class="container">
-            <header>
-                <h1>고등 국어 [오프라인] 스터디 모임</h1>
-            </header>
-
-            <section class="study-details">
-                <h2>모임 소개</h2>
-                <p>고등 국어 과목을 집중적으로 공부하기 위한 스터디 모임입니다. 교과서 및 주요 참고서를 기반으로 다양한 주제를 다루며, 문제 풀이 및 토론을 통해 국어 실력을 향상시킵니다.</p>
-                <ul>
-                    <li><strong>모임 종류:</strong> 오프라인</li>
-                    <li><strong>모임 기간:</strong> 3개월</li>
-                    <li><strong>현재 참가 인원:</strong> 3명 / 15명</li>
-                </ul>
-            </section>
-
-            <section class="related-books">
-                <h2>그룹 관련 책 정보</h2>
-                <ul>
-                    <li><strong>책 제목:</strong> 고등 국어 참고서</li>
-                    <li><strong>저자:</strong> 홍길동</li>
-                    <li><strong>별점:</strong> ⭐⭐⭐⭐☆</li>
-                    <li><strong>리뷰:</strong> 이 책은 정말 유용합니다. 좋은 내용과 문제들이 많아요!</li>
-                    <li><a href="/bookstore">책 구매하기</a></li>
-                </ul>
-            </section>
-
-            <section class="apply">
-                <h2>참가 신청 방법</h2>
-                <ol>
-                    <li>우측 상단의 "모임 참가" 버튼 클릭</li>
-                    <li>간단한 자기소개 및 학습 목표 작성</li>
-                    <li>관리자 승인 후 참여 가능</li>
-                </ol>
-            </section>
-
-            <div class="button-container">
-                <div class="button">
-                    <button id="join-button">모임 참가하기</button>
-                </div>
-                <div class="button">
-                    <button id="share-button" onclick="copyUrl()">공유하기</button>
-                </div>
-                <div class="button">
-                    <button id="back-button" onclick="goBack()">돌아가기</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+	<body>
+	    <div class="form-container">
+	        <h2>그룹 스터디 만들기</h2>
+			<div class="form-group">
+	            <label for="field">스터디 영역</label>
+	            <select id="field" name="field">
+	                <option>전체</option>
+	                <!-- 스터디 영역 추가 -->
+	            </select>
+	        </div>
+	        <div class="form-group">
+	            <label for="studyName">스터디 이름 (24자 이내)</label>
+	            <input type="text" id="studyName" name="studyName" maxlength="24">
+	        </div>
+	        <div class="form-group">
+	            <label for="startDate">스터디 기간 (시작일)</label>
+	            <input type="date" id="startDate" name="startDate">
+	        </div>
+	        <div class="form-group">
+	            <label for="endDate">스터디 기간 (종료일)</label>
+	            <input type="date" id="endDate" name="endDate">
+	        </div>
+	        <div class="form-group">
+	            <label for="time">스터디 시간 설정</label>
+	            <input type="time" id="time" name="time">
+	        </div>
+	        <div class="form-group">
+	            <label for="ageGroup">연령별</label>
+	            <select id="ageGroup" name="ageGroup">
+	                <option>전체</option>
+	                <!-- 연령대 추가 -->
+	            </select>
+	        </div>
+	        <div class="form-group">
+	            <label for="studyType">온라인/오프라인</label>
+	            <select id="studyType" name="studyType">
+	                <option>전체</option>
+	                <!-- 온라인/오프라인 추가 -->
+	            </select>
+	        </div>
+	        <div class="form-group">
+	            <label for="subject">과목</label>
+	            <select id="subject" name="subject">
+	                <option>전체</option>
+	                <!-- 과목 추가 -->
+	            </select>
+	        </div>
+	        <div class="form-group">
+	            <label for="members">모집 인원</label>
+	            <select id="members" name="members">
+	                <option>1명 (과외)</option>
+	                <!-- 모집 인원 추가 -->
+	            </select>
+	        </div>
+	        <div class="form-group">
+	            <label for="gender">성별</label>
+	            <select id="gender" name="gender">
+	                <option>전체</option>
+	                <!-- 성별 추가 -->
+	            </select>
+	        </div>
+	        <div class="form-group">
+	            <label>그룹 공개 여부</label>
+	            <div class="inline-radio">
+	                <input type="radio" id="public" name="visibility" value="public">
+	                <label for="public">공개</label>
+	                <input type="radio" id="private" name="visibility" value="private">
+	                <label for="private">비공개</label>
+	            </div>
+	            <input type="password" placeholder="비밀번호 4자리 (비공개 시 입력)">
+	        </div>
+	        <div class="form-group">
+	            <label for="book">참고 할 교재 </label>
+	            <div class="book-list">
+	                <select id="book" name="book">
+	                    <option>책 선택</option>
+	                    <!-- 책 리스트 추가 -->
+	                </select>
+	                <button class="add-book-btn">추가</button>
+	            </div>
+	            <input type="text" placeholder="직접 입력 (없으면 안써도됌)" style="margin-top: 10px;">
+	        </div>
+	        <button class="submit-btn">스터디 생성</button>
+	    </div>
+	</body>
+	</html>

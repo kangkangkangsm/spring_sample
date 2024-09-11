@@ -66,7 +66,17 @@ public class BoardController {
     	return "jusoPopup";
     }
     
- 
+    @RequestMapping("/board/item.do") 
+    public String item(Model model) throws Exception{
+
+        return "/board/item-list";
+    }
+    
+    @RequestMapping("/board/api1.do") 
+    public String api1(Model model) throws Exception{
+
+        return "/board/api1";
+    }
     
     // 게시글 삭제 (JSON)
     @RequestMapping(value = "/board/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -140,7 +150,7 @@ public class BoardController {
         return new Gson().toJson(resultMap);
     }
     
-    //Area
+    
     @RequestMapping(value = "/board/Area.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String AreaList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -149,6 +159,27 @@ public class BoardController {
         return new Gson().toJson(resultMap);
     }
     
+ 
+    @RequestMapping(value = "/board/itemList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String itemList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap = boardService.selectItem(map);
+        return new Gson().toJson(resultMap);
+    }
+  
+    @RequestMapping(value = "/board/itemCheckList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String itemCheckList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+       String json = map.get("selectItem").toString(); 
+            ObjectMapper mapper = new ObjectMapper();
+            List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+            map.put("list", list);
+            HashMap<String, Object> resultMap = new HashMap<String, Object>();
+            resultMap = boardService.ItemCheck(map);
+          
+            return new Gson().toJson(resultMap);
+ }
     @RequestMapping("/fileUpload.dox")
     public String result(@RequestParam("file1") MultipartFile multi, @RequestParam("idx") int idx, HttpServletRequest request,HttpServletResponse response, Model model)
     {

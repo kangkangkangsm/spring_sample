@@ -19,8 +19,9 @@ public class Board {
 	private String userName;
 	private String email;
 	private int cnt;
+	private int cnt2;
 	private String pcommentNo;
-	
+	private String CDATETIME2;
 	
 	private String cname;
 	private int price;
@@ -34,7 +35,8 @@ public class Board {
 	private String si;
 	private String gu;
 	private String dong;
-	
+	private int nx;
+	private int ny;
 	//TBL_BOADRFILE
 	private String idx;
 	private String fileName;
@@ -43,4 +45,17 @@ public class Board {
 	private String fileSize;
 	private String fileExt;
 	private String thumbnailYN;
+	
+	//TBL_CODE
+	private String kind;
+	private String codeName;
+	private int code;
+	
+	//TBL_ITEM
+	private int itemNo;
+	private String itemName;
+	private int category1;
+	
+	
+	
 }

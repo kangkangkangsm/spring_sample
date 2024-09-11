@@ -176,10 +176,15 @@
 			<tr v-for = "item in searchList">
 				<td><input type="checkbox" v-model="selectItem" :value="item.boardNo"></td>
 				<td>{{item.boardNo}}</td>
-				<td><a href="#" @click="fnView(item.boardNo)">{{item.TITLE}}</a></td>
+				<template v-if="item.cnt">
+				<td><a href="#" @click="fnView(item.boardNo)">{{item.TITLE}} ({{item.cnt}}) </a></td>
+				</template>
+				<template v-if="item.cnt == ''">
+					<td><a href="#" @click="fnView(item.boardNo)">{{item.TITLE}}</a></td>
+				</template>
 				<td><a href="#" @click="fnUserView(item.USERID)">{{item.userName}}</a></td>
 				<td>{{item.HIT}}</td>
-				<td>{{item.CDATETIME}}</td>
+				<td>{{item.CDATETIME2}}</td>
 				
 				<template v-if ="item.CATEGORY == '1'">	
 				<td>공지사항</td>
@@ -237,7 +242,9 @@
 				pageSize: 5,        
 				totalPages: 5,
 				cnt :'',
-				selectItem : []
+				selectItem : [],
+				boardNo:[],
+				cnt2 :''
 				
 				
             };
@@ -274,7 +281,7 @@
 				var startIndex = (page-1) * self.pageSize;
 				var outputNumber = self.pageSize;
 				self.currentPage = page;
-				var nparmap = {search : self.search, boardType : self.boardType, category : self.category,
+				var nparmap = {boardNo : self.boardNo, search : self.search, boardType : self.boardType, category : self.category,
 								startIndex : startIndex, outputNumber : outputNumber};
 				$.ajax({
 					url:"/board/search.dox",

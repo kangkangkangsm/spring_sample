@@ -17,7 +17,7 @@
 </style>
 <body>
 	<div id="app">
-	<!--	도/시 
+		도/시 
 		<select v-model="AreaSi" @change="fnGetList()">
 		<option value="">::선택::</option>
 		<option v-for ="item in AreaList " :value="item.si"> {{item.si}}</option>
@@ -31,13 +31,17 @@
 		</template>
 		<template v-if="AreaGu">
 		동
-		<select v-model="AreaDong">
+		<select v-model="AreaDong"  @change="fnGetList()">
 		<option value="">::선택::</option>
-		<option v-for ="item in donglist " :value="item.dong"> {{item.dong}}</option>
+		<option v-for ="item in donglist " :value="item.dong" > {{item.dong}}</option>
 		</select> 
 		</template>
-		<hr>-->
-		<div>
+		<hr>
+		<template v-if="NxNy">
+		<h3>{{NxNy.si}} {{NxNy.gu}} {{NxNy.dong}} 의 좌표는 ({{NxNy.nx}},{{NxNy.ny}}) 입니다. </h3>
+		<button @click="fnApi(NxNy.nx,NxNy.ny )">클릭</button>
+		</template>
+		<!--<div>
 			<a>아이디</a><input type="text" placeholder="아이디)영어+숫자 5글자이상" v-model="userId" >
 			<button @click="fnCheck()">중복체크</button>
 		</div>
@@ -55,7 +59,7 @@
 			<a>핸드폰번호</a><input type="text" placeholder="핸드폰번호 숫자만)" v-model="phone" >
 		</div>
 		<button @click="fnSave()"> 가입하기 </button>
-	</div>
+	</div>-->
 </body>
 </html>
 <script>
@@ -80,7 +84,11 @@
 				pwd : "",
 				pwd2 :"",
 				phone : "",
-				idCheck : {}
+				idCheck : {},
+				gu:'',
+				NxNy : {},
+				nx : '',
+				ny : ''
 				
             };
         },
@@ -165,7 +173,8 @@
 				var self = this;
 				var AreaSi = self.AreaSi;
 				var AreaGu = self.AreaGu; 
-				var nparmap = {si : AreaSi, gu : AreaGu};
+				var AreaDong = self.AreaDong;
+				var nparmap = {si : AreaSi, gu : AreaGu, dong : AreaDong};
 					if (AreaSi == "") {
 	                   self.gulist = [];
 	                   self.AreaGu = "";
@@ -185,9 +194,30 @@
 						self.AreaList = data.list;
 						self.gulist = data.gulist;
 						self.donglist = data.donglist;
-					}
+						self.NxNy = data.NxNy;					}
 				});
-            },
+            },			fnApi(nx,ny){
+					var self = this;
+					var xhr = new XMLHttpRequest();
+					var url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst'; /*URL*/
+					var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'EOazpFyjvggWrA1MakzjdNfHJ3HCxiGTAy%2BrWOEPoUhyXpQgHemblWzEJ0f6tQk4EInoS3Q%2FylXLuRWFNb3PVA%3D%3D'; /*Service Key*/
+					queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+					queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000'); /**/
+					queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /**/
+					queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent('20240911'); /**/
+					queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent('0600'); /**/
+					queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent(nx); /**/
+					queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent(ny); /**/
+					xhr.open('GET', url + queryParams);
+					xhr.onreadystatechange = function () {
+					    if (this.readyState == 4) {
+							//console.log('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
+						console.log(JSON.parse(this.responseText));
+					    }
+					};
+
+					xhr.send('');
+				 },
 			
 			
         },
