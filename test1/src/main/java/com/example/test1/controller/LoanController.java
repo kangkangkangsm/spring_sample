@@ -126,6 +126,18 @@ public class LoanController {
        return "/projectT/studyCommunityProfile";
    }
    
+   @RequestMapping("/studyMyCommunity.do") 
+   public String studyMyCommunity(Model model) throws Exception{
+
+       return "/projectT/studyMyCommunity";
+   }
+   @RequestMapping("/studyCommunityMyProfile.do") 
+   public String studyCommunityMyProfile(Model model) throws Exception{
+
+       return "/projectT/studyCommunityMyProfile";
+   }
+
+   
    //책 목록 페이지
    @RequestMapping(value = "/members-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
    @ResponseBody
